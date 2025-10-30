@@ -1,3 +1,4 @@
+import 'package:education_app/routers/app_router.dart';
 import 'package:education_app/screens/welcome_page.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +11,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: WelcomePage(),
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: true,
+      title: 'Education App',
+      routerConfig: appRouter,
     );
   }
 }
