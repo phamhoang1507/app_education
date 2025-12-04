@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "88844383960",
+    "firebase_url": "https://education-111a6-default-rtdb.firebaseio.com",
+    "project_id": "education-111a6",
+    "storage_bucket": "education-111a6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88844383960:android:6a1642f8c41c512e9089ad",
+        "android_client_info": {
+          "package_name": "com.example.education_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "88844383960-o4960cjhv0rec10luf9jstuqig3tjd82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF_tYPlToWuu5UG1wIYF-Bgsa8Uba4MJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "88844383960-o4960cjhv0rec10luf9jstuqig3tjd82.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
