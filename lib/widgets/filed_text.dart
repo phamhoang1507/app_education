@@ -40,7 +40,7 @@ class _FiledTextState extends State<FiledText> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Email'),
+        Text(widget.textTitle),
         TextFormField(
           obscureText: check,
           controller: widget.controller,

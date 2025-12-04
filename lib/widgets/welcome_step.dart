@@ -20,13 +20,13 @@ class WelcomeStep extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: screenHeight * 0.15),
+        SizedBox(height: screenHeight * 0.12),
         SvgPicture.asset(
           imagePath,
           fit: BoxFit.contain,
           height: screenHeight * 0.35,
         ),
-        SizedBox(height: screenHeight * 0.15),
+        SizedBox(height: screenHeight * 0.08),
         Text(
           title,
           textAlign: TextAlign.center,
@@ -42,7 +42,7 @@ class WelcomeStep extends StatelessWidget {
           child: Text(
             description,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14, color: Colors.black87),
+            style: TextStyle(fontSize: 12, color: Colors.black87),
           ),
         ),
       ],
