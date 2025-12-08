@@ -1,7 +1,16 @@
+import 'package:education_app/model/course.dart';
+import 'package:education_app/model/instructor.dart';
+import 'package:education_app/model/subject.dart';
+import 'package:education_app/repositories/course_repository.dart';
+import 'package:education_app/repositories/instructor_repository.dart';
+import 'package:education_app/repositories/subject_repository.dart';
+import 'package:education_app/widgets/tilte_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +22,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final subjectRepo = SubjectRepository();
+    final courseRepo = CourseRepository();
+    final instructorRepo = InstructorRepository();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -89,10 +101,14 @@ class _HomePageState extends State<HomePage> {
                   child: Form(
                     child: TextFormField(
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(vertical: 8.0),
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                        ),
                         prefixIcon: const Icon(Icons.search),
                         hintText: 'Search',
-                        border: const OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Row(
@@ -117,11 +133,335 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+                SizedBox(height: 25),
+                TilteSlider(
+                  title: 'Live Subject Tutoring',
+                  textName: "All Subjects",
+                  datas: subjectRepo.loadSubject(),
+                  slide: (data) => _buildSubjectCard(data as Subject),
+                ),
+                SizedBox(height: 50),
+                _buildBannerSection(context),
+                SizedBox(height: 15),
+                TilteSlider(
+                  title: 'Trending Courses',
+                  textName: "All Courses",
+                  datas: courseRepo.loadCoursesTrending(),
+                  slide: (data) => _buildCourseCard(data as Course),
+                ),
+                SizedBox(height: 15),
+                TilteSlider(
+                  title: 'Top Instructor of the Week',
+                  datas: instructorRepo.loadInstructor(),
+                  slide: (data) => _buildInstructorCard(data as Instructor),
+                ),
+                SizedBox(height: 15),
+                TilteSlider(
+                  title: 'Top New Courses',
+                  textName: "All Courses",
+                  datas: courseRepo.loadCoursesNew(),
+                  slide: (data) => _buildCourseCard(data as Course),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildBannerSection(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 140,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFFEC4899), Color(0xFF9547ED)],
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+            right: 10,
+            bottom: 0,
+            child: SizedBox(
+              width: 150,
+              height: 185,
+              child: ClipRect(
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  alignment: Alignment.topCenter,
+                  child: Image.asset('assets/images/banner.png'),
+                ),
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Get Lifetime ',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          'Deal',
+                          style: TextStyle(
+                            fontSize: 20,
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color(0xFFFFD700),
+                            decorationThickness: 2,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFFFD700),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      'Access to all on-demand courses',
+                      style: TextStyle(fontSize: 13, color: Colors.black),
+                    ),
+                  ],
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black54,
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: Text(
+                    'Redeem Now',
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSubjectCard(Subject subject) {
+    return Container(
+      width: 170,
+      height: 90,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [HexColor(subject.startColor), HexColor(subject.endColor)],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: HexColor(subject.endColor).withOpacity(0.3),
+            blurRadius: 8,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            right: 0,
+            top: -20,
+            child: Opacity(
+              opacity: 0.1,
+              child: Icon(getIcon(subject.icon), size: 80),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: Icon(
+                    getIcon(subject.icon),
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      subject.name,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      ' - ${subject.tutorCount} Tutor',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white.withOpacity(0.9),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCourseCard(Course course) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 230,
+          height: 130,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(course.image, fit: BoxFit.cover),
+          ),
+        ),
+        SizedBox(height: 8),
+        Text(
+          course.title,
+          textAlign: TextAlign.left,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+        SizedBox(height: 8),
+        Row(
+          children: [
+            Text(course.instructor),
+            Text(' - '),
+            Text(course.duration),
+          ],
+        ),
+        SizedBox(height: 8),
+        Container(
+          width: 230,
+          height: 1,
+          color: Colors.grey,
+          margin: const EdgeInsets.only(right: 8.0),
+        ),
+        SizedBox(height: 8),
+        SizedBox(
+          width: 230,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "\$${course.price.toStringAsFixed(2)}",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  Text(" \$${course.originalPrice.toStringAsFixed(0)}"),
+                ],
+              ),
+              Row(
+                children: [
+                  Icon(Icons.star, color: HexColor('FB923C')),
+                  Text(course.rating.toString()),
+                  SizedBox(width: 5),
+                  Text(
+                    '(${NumberFormat('#,###').format(course.reviewCount).toString()})',
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 8),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+          decoration: BoxDecoration(
+            color: !course.level.contains('Beginner')
+                ? Color(0xFFE7D5FF)
+                : HexColor('#DCFCE7'),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Text(course.level),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildInstructorCard(Instructor instructor) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey, width: 2),
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+      ),
+      width: 170,
+      height: 170,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 80,
+            height: 80,
+            child: ClipOval(
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.topCenter,
+                child: Image.asset(instructor.image),
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Text(
+            instructor.name,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 5),
+          Text(
+            instructor.subject,
+            style: TextStyle(fontSize: 14),
+          ),
+        ],
+      ),
+    );
+  }
+
+  IconData getIcon(String icon) {
+    switch (icon) {
+      case 'calculate':
+        return Icons.calculate;
+      case 'architecture':
+        return Icons.architecture;
+      case 'science':
+        return Icons.science;
+      case 'flash_on':
+        return Icons.flash_on;
+      default:
+        return Icons.computer;
+    }
   }
 }

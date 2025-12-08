@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Mat 116",
+    "tutorCount": 19,
+    "icon": "calculate",
+    "startColor": "#FF6B6B",
+    "endColor": "#FF8E72"
+  },
+  {
+    "id": 2,
+    "name": "Arch 116",
+    "tutorCount": 15,
+    "icon": "architecture",
+    "startColor": "#1E88E5",
+    "endColor": "#42A5F5"
+  },
+  {
+    "id": 3,
+    "name": "Chem 101",
+    "tutorCount": 12,
+    "icon": "science",
+    "startColor": "#9C27B0",
+    "endColor": "#BA68C8"
+  },
+  {
+    "id": 4,
+    "name": "Phys 205",
+    "tutorCount": 18,
+    "icon": "flash_on",
+    "startColor": "#FF6F00",
+    "endColor": "#FFB74D"
+  },
+  {
+    "id": 5,
+    "name": "CS 201",
+    "tutorCount": 25,
+    "icon": "computer",
+    "startColor": "#4CAF50",
+    "endColor": "#81C784"
+  }
+]

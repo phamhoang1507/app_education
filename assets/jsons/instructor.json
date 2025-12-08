@@ -1,0 +1,194 @@
+[
+  {
+    "id": 1,
+    "name": "Robert Wilson",
+    "subject": "Chemical",
+    "image": "assets/images/instructor_robert.jpg",
+    "rating": 4.5,
+    "reviewCount": 2980,
+    "isTopAuthor": true,
+    "bio": "Experienced chemistry educator with 15+ years of teaching experience",
+    "totalStudents": 12500,
+    "courses": [
+      1
+    ],
+    "specialization": "Chemistry Fundamentals",
+    "description": "Wilson specializes in making complex chemistry concepts easy to understand"
+  },
+  {
+    "id": 2,
+    "name": "Emma Thompson",
+    "subject": "Chemical",
+    "image": "assets/images/instructor_emma.jpg",
+    "rating": 4.8,
+    "reviewCount": 15244,
+    "isTopAuthor": true,
+    "bio": "Expert in organic chemistry with PhD from top university",
+    "totalStudents": 18900,
+    "courses": [
+      2
+    ],
+    "specialization": "Organic Chemistry",
+    "description": "Thompson brings research experience to her teaching methodology"
+  },
+  {
+    "id": 3,
+    "name": "Michael History",
+    "subject": "History",
+    "image": "assets/images/instructor_michael.jpg",
+    "rating": 4.6,
+    "reviewCount": 1203,
+    "isTopAuthor": false,
+    "bio": "History professor passionate about making past events relevant",
+    "totalStudents": 8500,
+    "courses": [
+      3
+    ],
+    "specialization": "World History",
+    "description": "History uses engaging storytelling to teach historical events"
+  },
+  {
+    "id": 4,
+    "name": "Sarah King",
+    "subject": "History",
+    "image": "assets/images/instructor_sarah.jpg",
+    "rating": 4.7,
+    "reviewCount": 856,
+    "isTopAuthor": true,
+    "bio": "Modern history expert with published research papers",
+    "totalStudents": 6200,
+    "courses": [
+      4
+    ],
+    "specialization": "Modern History Analysis",
+    "description": "King analyzes contemporary historical events with critical perspective"
+  },
+  {
+    "id": 5,
+    "name": "John Smith",
+    "subject": "IT",
+    "image": "assets/images/instructor_john.jpg",
+    "rating": 4.4,
+    "reviewCount": 678,
+    "isTopAuthor": false,
+    "bio": "IT professional with hands-on industry experience",
+    "totalStudents": 5400,
+    "courses": [
+      5
+    ],
+    "specialization": "IT Fundamentals",
+    "description": "John brings real-world IT experience to beginner students"
+  },
+  {
+    "id": 6,
+    "name": "Mike Chen",
+    "subject": "IT",
+    "image": "assets/images/instructor_mike.jpg",
+    "rating": 4.9,
+    "reviewCount": 2104,
+    "isTopAuthor": true,
+    "bio": "Senior software engineer and programming mentor",
+    "totalStudents": 15800,
+    "courses": [
+      6
+    ],
+    "specialization": "Advanced Programming",
+    "description": "Mike is a passionate programmer dedicated to teaching advanced concepts"
+  },
+  {
+    "id": 7,
+    "name": "Elizabeth Foster",
+    "subject": "Literature",
+    "image": "assets/images/instructor_elizabeth.jpg",
+    "rating": 4.7,
+    "reviewCount": 945,
+    "isTopAuthor": true,
+    "bio": "Literature scholar with expertise in world classics",
+    "totalStudents": 7800,
+    "courses": [
+      7
+    ],
+    "specialization": "Literature Classics",
+    "description": "Foster brings deep literary analysis to classic texts"
+  },
+  {
+    "id": 8,
+    "name": "James Authors",
+    "subject": "Literature",
+    "image": "assets/images/instructor_james.jpg",
+    "rating": 4.6,
+    "reviewCount": 1087,
+    "isTopAuthor": false,
+    "bio": "Professional author and creative writing coach",
+    "totalStudents": 6900,
+    "courses": [
+      8
+    ],
+    "specialization": "Creative Writing",
+    "description": "James helps aspiring writers develop their unique voice and craft"
+  },
+  {
+    "id": 9,
+    "name": "Andrew Newton",
+    "subject": "Math",
+    "image": "assets/images/instructor_andrew.jpg",
+    "rating": 4.8,
+    "reviewCount": 2341,
+    "isTopAuthor": true,
+    "bio": "Mathematics educator focused on building strong foundations",
+    "totalStudents": 13200,
+    "courses": [
+      9
+    ],
+    "specialization": "Mathematics Foundations",
+    "description": "Newton makes mathematics accessible to students of all levels"
+  },
+  {
+    "id": 10,
+    "name": "Lisa Algebra",
+    "subject": "Math",
+    "image": "assets/images/instructor_lisa.jpg",
+    "rating": 4.9,
+    "reviewCount": 1698,
+    "isTopAuthor": true,
+    "bio": "Advanced mathematics specialist with PhD in Mathematics",
+    "totalStudents": 9600,
+    "courses": [
+      10
+    ],
+    "specialization": "Calculus",
+    "description": "Algebra is expert in advanced mathematical concepts"
+  },
+  {
+    "id": 11,
+    "name": "Stephen Hawking",
+    "subject": "Physics",
+    "image": "assets/images/instructor_stephen.jpg",
+    "rating": 4.7,
+    "reviewCount": 1876,
+    "isTopAuthor": true,
+    "bio": "Physics educator passionate about universe and energy",
+    "totalStudents": 10500,
+    "courses": [
+      11
+    ],
+    "specialization": "Physics Fundamentals",
+    "description": "Hawking explains complex physics concepts with clarity"
+  },
+  {
+    "id": 12,
+    "name": "Grace Quantum",
+    "subject": "Physics",
+    "image": "assets/images/instructor_grace.jpg",
+    "rating": 4.8,
+    "reviewCount": 1203,
+    "isTopAuthor": true,
+    "bio": "Quantum physics specialist and research scientist",
+    "totalStudents": 8200,
+    "courses": [
+      12
+    ],
+    "specialization": "Quantum Physics",
+    "description": "Grace makes quantum mechanics understandable and fascinating"
+  }
+]
