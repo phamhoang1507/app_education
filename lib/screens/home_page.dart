@@ -1,10 +1,14 @@
 import 'package:education_app/model/course.dart';
 import 'package:education_app/model/instructor.dart';
 import 'package:education_app/model/subject.dart';
+import 'package:education_app/model/user.dart';
 import 'package:education_app/repositories/course_repository.dart';
 import 'package:education_app/repositories/instructor_repository.dart';
 import 'package:education_app/repositories/subject_repository.dart';
+import 'package:education_app/services/auth_service.dart';
+import 'package:education_app/widgets/button_icon_text.dart';
 import 'package:education_app/widgets/tilte_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,7 +36,7 @@ class _HomePageState extends State<HomePage> {
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.black87),
           onPressed: () {
-            // Mở Drawer hoặc menu
+            _openLeftMenu(context);
           },
         ),
         actions: [
@@ -447,6 +451,199 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+    );
+  }
+
+  void _openLeftMenu(BuildContext context) {
+    final auth = AuthServices();
+    final user = FirebaseAuth.instance.currentUser!;
+    final myUser = auth.getUser(user.uid);
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: "",
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (_, __, ___) {
+        return const SizedBox.shrink();
+      },
+      transitionBuilder: (context, animation, secondary, child) {
+        final slide = Tween<Offset>(
+          begin: const Offset(-1, 0),
+          end: Offset.zero,
+        ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOut));
+
+        return SlideTransition(
+          position: slide,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: double.infinity,
+              color: Colors.white,
+              child: FutureBuilder<UserModel?>(
+                future: myUser,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Column(
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Scaffold(
+                            backgroundColor: HexColor('#FFFFFF'),
+                            body: Container(),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 7,
+                          child: Scaffold(backgroundColor: HexColor('#0F172A')),
+                        ),
+                      ],
+                    );
+                  }
+                  if (!snapshot.hasData || snapshot.data == null) {
+                    return Center(child: Text("Không tải được user"));
+                  }
+                  final data = snapshot.data!;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Scaffold(
+                          backgroundColor: HexColor('#FFFFFF'),
+                          body: Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 30,
+                            ),
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 40),
+                                CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage: data.photoURL != null
+                                      ? NetworkImage(data.photoURL!)
+                                      : null,
+                                  child: data.photoURL == null
+                                      ? Icon(Icons.account_circle_sharp)
+                                      : null,
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  data.displayName,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  data.email,
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  data.phoneNumber ?? "Không số điện thoại",
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 7,
+                        child: Scaffold(
+                          backgroundColor: HexColor('#0F172A'),
+                          body: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                SizedBox(height: 15,),
+                                ButtonIconText(
+                                  text: 'Home',
+                                  icon: Icons.home_outlined,
+                                  color: Colors.white,
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  sizeIcon: 25,
+                                  fontSize: 14,
+                                ),
+                                ButtonIconText(
+                                  text: 'Messages',
+                                  icon: Icons.chat_bubble_outline,
+                                  color: Colors.white,
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  sizeIcon: 25,
+                                  fontSize: 14,
+                                ),
+                                ButtonIconText(
+                                  text: 'Tutor Bookings',
+                                  icon: Icons.list_outlined,
+                                  color: Colors.white,
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  sizeIcon: 25,
+                                  fontSize: 14,
+                                ),
+                                ButtonIconText(
+                                  text: 'My Courses',
+                                  icon: Icons.menu_book_outlined,
+                                  color: Colors.white,
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  sizeIcon: 25,
+                                  fontSize: 14,
+                                ),
+                                ButtonIconText(
+                                  text: 'Rating & Reviews',
+                                  icon: Icons.star_border_outlined,
+                                  color: Colors.white,
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  sizeIcon: 25,
+                                  fontSize: 14,
+                                ),
+                                ButtonIconText(
+                                  text: 'Profile',
+                                  icon: Icons.person_outline_outlined,
+                                  color: Colors.white,
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  sizeIcon: 25,
+                                  fontSize: 14,
+                                ),
+                                ButtonIconText(
+                                  text: 'Logout',
+                                  icon: Icons.logout_outlined,
+                                  color: Colors.white,
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  sizeIcon: 25,
+                                  fontSize: 14,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
