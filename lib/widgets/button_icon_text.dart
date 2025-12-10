@@ -1,3 +1,4 @@
+import 'package:education_app/widgets/icon_text.dart';
 import 'package:flutter/material.dart';
 
 class ButtonIconText extends StatelessWidget {
@@ -24,16 +25,7 @@ class ButtonIconText extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-        child: Row(
-          children: [
-            Icon(icon, color: color, size: sizeIcon),
-            SizedBox(width: 10),
-            Text(
-              text,
-              style: TextStyle(color: color, fontSize: fontSize, fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
+        child: IconText(text: text, icon: icon, color: color, sizeIcon: sizeIcon, fontSize: fontSize)
       ),
     );
   }

@@ -576,7 +576,6 @@ class _HomePageState extends State<HomePage> {
                                   icon: Icons.chat_bubble_outline,
                                   color: Colors.white,
                                   onTap: () {
-                                    Navigator.pop(context);
                                   },
                                   sizeIcon: 25,
                                   fontSize: 14,
@@ -586,7 +585,6 @@ class _HomePageState extends State<HomePage> {
                                   icon: Icons.list_outlined,
                                   color: Colors.white,
                                   onTap: () {
-                                    Navigator.pop(context);
                                   },
                                   sizeIcon: 25,
                                   fontSize: 14,
@@ -596,7 +594,6 @@ class _HomePageState extends State<HomePage> {
                                   icon: Icons.menu_book_outlined,
                                   color: Colors.white,
                                   onTap: () {
-                                    Navigator.pop(context);
                                   },
                                   sizeIcon: 25,
                                   fontSize: 14,
@@ -606,7 +603,6 @@ class _HomePageState extends State<HomePage> {
                                   icon: Icons.star_border_outlined,
                                   color: Colors.white,
                                   onTap: () {
-                                    Navigator.pop(context);
                                   },
                                   sizeIcon: 25,
                                   fontSize: 14,
@@ -616,7 +612,7 @@ class _HomePageState extends State<HomePage> {
                                   icon: Icons.person_outline_outlined,
                                   color: Colors.white,
                                   onTap: () {
-                                    Navigator.pop(context);
+                                    context.push('/profile');
                                   },
                                   sizeIcon: 25,
                                   fontSize: 14,
@@ -626,7 +622,6 @@ class _HomePageState extends State<HomePage> {
                                   icon: Icons.logout_outlined,
                                   color: Colors.white,
                                   onTap: () {
-                                    Navigator.pop(context);
                                   },
                                   sizeIcon: 25,
                                   fontSize: 14,
