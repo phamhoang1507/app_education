@@ -27,7 +27,7 @@ class Instructor {
     required this.description,
   });
 
-  factory Instructor.fromJson(Map<String, dynamic> json) {
+  factory Instructor.fromJson(dynamic json) {
     return Instructor(
       id: json['id'] as int,
       name: json['name'] as String,

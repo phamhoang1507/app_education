@@ -33,7 +33,7 @@ class Course {
     required this.createdAt,
   });
 
-  factory Course.fromJson(Map<String, dynamic> json) {
+  factory Course.fromJson(dynamic json) {
     DateTime parsedDate =
         DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now();
     return Course(

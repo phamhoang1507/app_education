@@ -21,7 +21,7 @@ class Subject {
     'endColor': endColor,
   };
 
-  static Subject fromJson(Map<String, dynamic> json) {
+  static Subject fromJson(dynamic json) {
     return Subject(
       name: json['name'],
       tutorCount: json['tutorCount'],
