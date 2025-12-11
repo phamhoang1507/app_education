@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                 TilteSlider(
                   title: 'Live Subject Tutoring',
                   textName: "All Subjects",
-                  datas: subjectRepo.loadSubject(),
+                  datas: subjectRepo.getSubject(),
                   slide: (data) => _buildSubjectCard(data as Subject),
                 ),
                 SizedBox(height: 50),
@@ -150,20 +150,20 @@ class _HomePageState extends State<HomePage> {
                 TilteSlider(
                   title: 'Trending Courses',
                   textName: "All Courses",
-                  datas: courseRepo.loadCoursesTrending(),
+                  datas: courseRepo.getCoursesTrending(),
                   slide: (data) => _buildCourseCard(data as Course),
                 ),
                 SizedBox(height: 15),
                 TilteSlider(
                   title: 'Top Instructor of the Week',
-                  datas: instructorRepo.loadInstructor(),
+                  datas: instructorRepo.getInstructors(),
                   slide: (data) => _buildInstructorCard(data as Instructor),
                 ),
                 SizedBox(height: 15),
                 TilteSlider(
                   title: 'Top New Courses',
                   textName: "All Courses",
-                  datas: courseRepo.loadCoursesNew(),
+                  datas: courseRepo.getCoursesNew(),
                   slide: (data) => _buildCourseCard(data as Course),
                 ),
               ],
