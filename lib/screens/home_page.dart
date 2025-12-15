@@ -523,11 +523,12 @@ class _HomePageState extends State<HomePage> {
                                 SizedBox(height: 40),
                                 CircleAvatar(
                                   radius: 40,
+                                  backgroundColor: Colors.white,
                                   backgroundImage: data.photoURL != null
                                       ? NetworkImage(data.photoURL!)
                                       : null,
                                   child: data.photoURL == null
-                                      ? Icon(Icons.account_circle_sharp)
+                                      ? Icon(Icons.account_circle_sharp, size: 80,color: Colors.grey,)
                                       : null,
                                 ),
                                 SizedBox(height: 20),
@@ -622,6 +623,8 @@ class _HomePageState extends State<HomePage> {
                                   icon: Icons.logout_outlined,
                                   color: Colors.white,
                                   onTap: () {
+                                    auth.signOut();
+                                    context.go('/login');
                                   },
                                   sizeIcon: 25,
                                   fontSize: 14,

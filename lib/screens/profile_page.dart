@@ -1,6 +1,9 @@
 import 'package:education_app/model/user.dart';
 import 'package:education_app/services/auth_service.dart';
 import 'package:education_app/utilities/common_variables.dart';
+import 'package:education_app/utilities/flutter_toast.dart';
+import 'package:education_app/utilities/exception_firebase.dart';
+import 'package:education_app/utilities/input_confirm.dart';
 import 'package:education_app/widgets/custombar.dart';
 import 'package:education_app/widgets/icon_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -86,8 +89,16 @@ class ProfilePage extends StatelessWidget {
                             children: [
                               CircleAvatar(
                                 radius: 40,
+                                backgroundColor: Colors.white,
                                 backgroundImage: data.photoURL != null
                                     ? NetworkImage(data.photoURL!)
+                                    : null,
+                                child: data.photoURL == null
+                                    ? Icon(
+                                        Icons.account_circle_sharp,
+                                        size: 75,
+                                        color: Colors.grey,
+                                      )
                                     : null,
                               ),
                               SizedBox(width: 15),
@@ -261,7 +272,7 @@ class ProfilePage extends StatelessWidget {
                             children: [
                               Custombar(
                                 onTap: () {
-                                  print(123);
+                                  _toggleDeleteAccount(context, auth);
                                 },
                                 leading: IconText(
                                   text: 'Delete Account',
@@ -273,7 +284,8 @@ class ProfilePage extends StatelessWidget {
                               ),
                               Custombar(
                                 onTap: () {
-                                  print(123);
+                                  auth.signOut();
+                                  context.go('/login');
                                 },
                                 isLast: true,
                                 leading: IconText(
@@ -296,6 +308,135 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _toggleDeleteAccount(
+    BuildContext context,
+    AuthServices auth,
+  ) async {
+    final user = auth.currentUser;
+
+    if (user == null) {
+      showToast(context, 'Không có người dùng');
+      context.go('/login');
+      return;
+    }
+
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Xác nhận xóa tài khoản'),
+        content: Text(
+          'Tài khoản của bạn sẽ bị xóa vĩnh viễn và không thể khôi phục.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('Hủy'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text('Xóa'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true) return;
+
+    String? password;
+
+    if (user.providerData.first.providerId == "password") {
+      password = await inputConfirm(
+        context,
+        'Xác nhận mật khẩu',
+        'Nhập mật khẩu',
+      );
+      if (password == null) {
+        return;
+      }
+      if (password.isEmpty) {
+        showToast(context, "Bạn chưa nhập password");
+        return;
+      }
+    }
+
+    if (user.providerData.first.providerId == "google.com") {
+      password = await inputConfirm(context, 'Xác nhận email', 'Nhập email');
+      if (password == null || password.isEmpty) {
+        showToast(context, "Bạn chưa nhập email");
+        return;
+      }
+    }
+
+    // Loading
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const Center(child: CircularProgressIndicator()),
+    );
+
+    try {
+      await auth.deleteUserAccount(emailPassword: password);
+      if (context.mounted) {
+        Navigator.pop(context);
+
+        context.go('/login');
+        showToast(context, "Xóa tài khoản thành công");
+      }
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      final errorMessage = ExceptionFirebase.getErrorFirebase(e);
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMessage),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
+
+      print('Firebase Auth Error: ${e.code} - ${e.message}');
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Lỗi kết nối. Vui lòng kiểm tra mạng.'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<String?> showPasswordInput(BuildContext context) async {
+    final controller = TextEditingController();
+
+    return showDialog<String>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Xác nhận mật khẩu"),
+          content: TextField(
+            controller: controller,
+            obscureText: true,
+            decoration: InputDecoration(labelText: "Nhập mật khẩu"),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, null),
+              child: Text("Hủy"),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context, controller.text),
+              child: Text("Tiếp tục"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

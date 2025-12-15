@@ -1,5 +1,6 @@
 import 'package:education_app/services/auth_service.dart';
 import 'package:education_app/widgets/filed_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   late bool _isLogEmail = true;
   bool _rememberMe = false;
   final _auth = AuthServices();
+  String? _loginError;
 
   Future<void> _handleGoogle() async {
     final ok = await _auth.signInGoogle();
@@ -50,13 +52,17 @@ class _LoginPageState extends State<LoginPage> {
     try {
       final ok = await _auth.signInEmail(email, password);
       if (ok && mounted) {
+        _loginError = null;
         context.go('/home');
       }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Lỗi bất ngờ: $e')));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "invalid-credential" ||
+          e.code == "user-not-found" ||
+          e.code == "wrong-password") {
+        setState(() {
+          _loginError = "Email hoặc mật khẩu không đúng";
+        });
+        _formKey.currentState?.validate();
       }
     }
   }
@@ -110,6 +116,8 @@ class _LoginPageState extends State<LoginPage> {
                                       } else if (value.contains('@') == false) {
                                         return 'Please enter a valid email';
                                       }
+                                      if (_loginError != null)
+                                        return _loginError;
                                       return null;
                                     },
                                   ),
@@ -131,6 +139,8 @@ class _LoginPageState extends State<LoginPage> {
                                       } else if (value.length < 8) {
                                         return 'Please enter a valid password';
                                       }
+                                      if (_loginError != null)
+                                        return _loginError;
                                       return null;
                                     },
                                   ),
@@ -231,6 +241,7 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(color: Colors.white),
                           ),
                           onPressed: () {
+                            setState(() => _loginError = null);
                             if (_formKey.currentState?.validate() == true) {
                               _isLogEmail
                                   ? _handleEmailPassword()
