@@ -12,11 +12,14 @@ class AuthServices {
 
   Future<bool> signInEmail(String email, String password) async {
     try {
-      return (await _auth.signInWithEmailAndPassword(
-            email: email,
-            password: password,
-          )).user !=
-          null;
+      final user = (await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      )).user;
+      if (user != null) {
+        await _createOrUpdateUserDocument(user);
+      }
+      return user != null;
     } catch (e) {
       print('signInWithEmai; error: $e');
       rethrow;
@@ -131,7 +134,64 @@ class AuthServices {
   }
 
   Future<void> signOut() async {
-    await GoogleSignIn().signOut();
-    await _auth.signOut();
+    final user = _auth.currentUser;
+    if (user == null) throw Exception("No user");
+    final providerId = user.providerData.first.providerId;
+    if (providerId == 'google.com') {
+      await GoogleSignIn().signOut();
+      await _auth.signOut();
+    }
+  }
+
+  Future<void> reAuthWithEmail(String email, String password) async {
+    final credential = EmailAuthProvider.credential(
+      email: email,
+      password: password,
+    );
+    await _auth.currentUser!.reauthenticateWithCredential(credential);
+  }
+
+  Future<void> reAuthWithGoogle() async {
+    final googleUser = await GoogleSignIn().signIn();
+    if (googleUser == null) throw Exception("Google login canceled");
+
+    final googleAuth = await googleUser.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    await _auth.currentUser!.reauthenticateWithCredential(credential);
+  }
+
+  Future<void> deleteUserAccount({String? emailPassword}) async {
+    final user = _auth.currentUser;
+    if (user == null) throw Exception("No user");
+
+    final providerId = user.providerData.first.providerId;
+    if (providerId == 'password') {
+      if (emailPassword == null) {
+        throw Exception("Password required for email user");
+      }
+      await reAuthWithEmail(user.email!, emailPassword);
+    } else if (providerId == 'google.com') {
+      await reAuthWithGoogle();
+    } else if (providerId == 'facebook.com') {
+      //todo
+    } else if (providerId == 'phone') {
+      //todo
+    }
+    deleteUserDataInFirestore(user.uid);
+    user.delete();
+    signOut();
+  }
+
+  Future<void> deleteUserDataInFirestore(String uid) async {
+    try {
+      await _firestore.collection("users").doc(uid).delete();
+    } catch (e) {
+      print("Error deleting Firestore user data: $e");
+    }
   }
 }
