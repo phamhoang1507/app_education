@@ -3,6 +3,7 @@ import 'package:education_app/screens/home_page.dart';
 import 'package:education_app/screens/login_page.dart';
 import 'package:education_app/screens/profile_page.dart';
 import 'package:education_app/screens/register_page.dart';
+import 'package:education_app/screens/subject_page.dart';
 import 'package:education_app/screens/welcome_page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -37,6 +38,11 @@ final GoRouter appRouter = GoRouter(
       path: '/profile',
       name: 'profile',
       builder: (context, state) => const ProfilePage(),
+    ),
+    GoRoute(
+      path: '/subject',
+      name: 'subject',
+      builder: (context, state) => const SubjectPage(),
     ),
   ],
 );
