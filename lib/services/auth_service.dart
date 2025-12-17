@@ -10,6 +10,20 @@ class AuthServices {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   User? get currentUser => _auth.currentUser;
 
+  Future<bool> signUpEmail(String email, String password, String name) async {
+    try {
+      final credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      if (credential.user != null) {
+      await credential.user!.updateDisplayName(name);
+      await credential.user!.reload();
+    }
+      return credential.user != null;
+    } catch (e) {
+      print('Lỗi khác: $e');
+      rethrow;
+    }
+  }
+
   Future<bool> signInEmail(String email, String password) async {
     try {
       final user = (await _auth.signInWithEmailAndPassword(

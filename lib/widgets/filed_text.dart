@@ -50,7 +50,10 @@ class _FiledTextState extends State<FiledText> {
                 : null,
             suffixIcon: widget.lastIcon != null
                 ? GestureDetector(
-                    child: Icon(check ? widget.lastIcon![0] : widget.lastIcon![1], color: Colors.grey),
+                    child: Icon(
+                      check ? widget.lastIcon![0] : widget.lastIcon![1],
+                      color: Colors.grey,
+                    ),
                     onTap: () {
                       setState(() {
                         check = !check;

@@ -25,7 +25,13 @@ class ButtonIconText extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-        child: IconText(text: text, icon: icon, color: color, sizeIcon: sizeIcon, fontSize: fontSize)
+        child: IconText(
+          text: text,
+          icon: icon,
+          color: color,
+          sizeIcon: sizeIcon,
+          fontSize: fontSize,
+        ),
       ),
     );
   }

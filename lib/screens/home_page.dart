@@ -445,10 +445,7 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 5),
-          Text(
-            instructor.subject,
-            style: TextStyle(fontSize: 14),
-          ),
+          Text(instructor.subject, style: TextStyle(fontSize: 14)),
         ],
       ),
     );
@@ -528,7 +525,11 @@ class _HomePageState extends State<HomePage> {
                                       ? NetworkImage(data.photoURL!)
                                       : null,
                                   child: data.photoURL == null
-                                      ? Icon(Icons.account_circle_sharp, size: 80,color: Colors.grey,)
+                                      ? Icon(
+                                          Icons.account_circle_sharp,
+                                          size: 80,
+                                          color: Colors.grey,
+                                        )
                                       : null,
                                 ),
                                 SizedBox(height: 20),
@@ -561,7 +562,7 @@ class _HomePageState extends State<HomePage> {
                           body: SingleChildScrollView(
                             child: Column(
                               children: [
-                                SizedBox(height: 15,),
+                                SizedBox(height: 15),
                                 ButtonIconText(
                                   text: 'Home',
                                   icon: Icons.home_outlined,
@@ -576,8 +577,7 @@ class _HomePageState extends State<HomePage> {
                                   text: 'Messages',
                                   icon: Icons.chat_bubble_outline,
                                   color: Colors.white,
-                                  onTap: () {
-                                  },
+                                  onTap: () {},
                                   sizeIcon: 25,
                                   fontSize: 14,
                                 ),
@@ -585,8 +585,7 @@ class _HomePageState extends State<HomePage> {
                                   text: 'Tutor Bookings',
                                   icon: Icons.list_outlined,
                                   color: Colors.white,
-                                  onTap: () {
-                                  },
+                                  onTap: () {},
                                   sizeIcon: 25,
                                   fontSize: 14,
                                 ),
@@ -594,8 +593,7 @@ class _HomePageState extends State<HomePage> {
                                   text: 'My Courses',
                                   icon: Icons.menu_book_outlined,
                                   color: Colors.white,
-                                  onTap: () {
-                                  },
+                                  onTap: () {},
                                   sizeIcon: 25,
                                   fontSize: 14,
                                 ),
@@ -603,8 +601,7 @@ class _HomePageState extends State<HomePage> {
                                   text: 'Rating & Reviews',
                                   icon: Icons.star_border_outlined,
                                   color: Colors.white,
-                                  onTap: () {
-                                  },
+                                  onTap: () {},
                                   sizeIcon: 25,
                                   fontSize: 14,
                                 ),

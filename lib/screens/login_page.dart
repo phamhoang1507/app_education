@@ -69,7 +69,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    print(_isLogEmail);
     super.initState();
   }
 
@@ -111,9 +110,13 @@ class _LoginPageState extends State<LoginPage> {
                                     hiddenText: false,
                                     leadIcon: Icons.email_outlined,
                                     validator: (value) {
+                                      final bool emailValid = RegExp(
+                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                                      ).hasMatch(value);
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter your email';
-                                      } else if (value.contains('@') == false) {
+                                      }
+                                      if(emailValid != true) {
                                         return 'Please enter a valid email';
                                       }
                                       if (_loginError != null)
@@ -284,11 +287,10 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: HexColor('9649ED'),
-                            decoration: TextDecoration.underline,
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              context.go('/register');
+                              context.push('/register');
                             },
                         ),
                       ],
