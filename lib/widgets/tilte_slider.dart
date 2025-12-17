@@ -6,6 +6,7 @@ class TilteSlider extends StatelessWidget {
   final String? textName;
   final Future<List<dynamic>> datas;
   final Widget Function(dynamic) slide;
+  final VoidCallback? onTap;
 
   const TilteSlider({
     super.key,
@@ -13,6 +14,7 @@ class TilteSlider extends StatelessWidget {
     this.textName,
     required this.datas,
     required this.slide,
+    this.onTap,
   });
 
   @override
@@ -28,10 +30,7 @@ class TilteSlider extends StatelessWidget {
             ),
             textName != null
                 ? InkWell(
-                    onTap: () {
-                      print('Pressed All Subjects!');
-                      // Do something here...
-                    },
+                    onTap: onTap,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
