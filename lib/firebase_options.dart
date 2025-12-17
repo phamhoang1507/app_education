@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     projectId: 'education-111a6',
     databaseURL: 'https://education-111a6-default-rtdb.firebaseio.com',
     storageBucket: 'education-111a6.firebasestorage.app',
-    iosClientId: '88844383960-gaj6cqgdij4m46omm8r0qimn3ejg4v8h.apps.googleusercontent.com',
+    iosClientId:
+        '88844383960-gaj6cqgdij4m46omm8r0qimn3ejg4v8h.apps.googleusercontent.com',
     iosBundleId: 'com.example.educationApp',
   );
 
@@ -78,7 +79,8 @@ class DefaultFirebaseOptions {
     projectId: 'education-111a6',
     databaseURL: 'https://education-111a6-default-rtdb.firebaseio.com',
     storageBucket: 'education-111a6.firebasestorage.app',
-    iosClientId: '88844383960-gaj6cqgdij4m46omm8r0qimn3ejg4v8h.apps.googleusercontent.com',
+    iosClientId:
+        '88844383960-gaj6cqgdij4m46omm8r0qimn3ejg4v8h.apps.googleusercontent.com',
     iosBundleId: 'com.example.educationApp',
   );
 

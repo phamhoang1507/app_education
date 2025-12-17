@@ -15,7 +15,11 @@ class InstructorRepository {
 
   Future<List<Instructor>> getInstructors() async {
     try {
-      final query = await _db.collection('instructor').orderBy('rating', descending: true).orderBy('reviewCount', descending: true).get();
+      final query = await _db
+          .collection('instructor')
+          .orderBy('rating', descending: true)
+          .orderBy('reviewCount', descending: true)
+          .get();
       final instructors = query.docs
           .map((e) => Instructor.fromJson(e))
           .toList();

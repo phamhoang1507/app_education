@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-Future<String?> inputConfirm(BuildContext context, String text, String label) async {
+Future<String?> inputConfirm(
+  BuildContext context,
+  String text,
+  String label,
+) async {
   final controller = TextEditingController();
 
   return showDialog<String>(

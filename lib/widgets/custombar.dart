@@ -26,10 +26,7 @@ class Custombar extends StatelessWidget {
             padding: commonPaddingAll,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                leading,
-                ?late,
-              ],
+              children: [leading, ?late],
             ),
           ),
         ),
