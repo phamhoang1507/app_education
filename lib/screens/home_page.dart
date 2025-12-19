@@ -124,6 +124,9 @@ class _HomePageState extends State<HomePage> {
                   textName: "All Courses",
                   datas: courseRepo.getCoursesTrending(),
                   slide: (data) => buildCourseCard(data as Course),
+                  onTap: () {
+                    context.push('/courses');
+                  },
                 ),
                 SizedBox(height: 15),
                 TilteSlider(
@@ -137,6 +140,9 @@ class _HomePageState extends State<HomePage> {
                   textName: "All Courses",
                   datas: courseRepo.getCoursesNew(),
                   slide: (data) => buildCourseCard(data as Course),
+                  onTap: () {
+                    context.push('/courses');
+                  },
                 ),
               ],
             ),

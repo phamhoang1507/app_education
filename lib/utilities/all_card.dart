@@ -77,19 +77,10 @@ Widget buildSubjectCard(Subject subject) {
   );
 }
 
-Widget buildCourseCard(Course course) {
+Widget buildCourseDescription(Course course) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Container(
-        width: 230,
-        height: 130,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Image.asset(course.image, fit: BoxFit.cover),
-        ),
-      ),
-      SizedBox(height: 8),
       Text(
         course.title,
         textAlign: TextAlign.left,
@@ -146,6 +137,27 @@ Widget buildCourseCard(Course course) {
         ),
         child: Text(course.level),
       ),
+    ],
+  );
+}
+
+Widget buildCourseCard(Course course) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        width: 230,
+        height: 130,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          image: DecorationImage(
+            image: AssetImage(course.image),
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      SizedBox(height: 8),
+      buildCourseDescription(course),
     ],
   );
 }

@@ -49,4 +49,18 @@ class CourseRepository {
       return List.empty();
     }
   }
+
+  Future<List<Course>> getCoursesPrice() async {
+    try {
+      final query = await _db
+          .collection('courses')
+          .orderBy('price', descending: true)
+          .get();
+      final courses = query.docs.map((e) => Course.fromJson(e)).toList();
+      return courses;
+    } catch (e) {
+      print('Lỗi: $e');
+      return List.empty();
+    }
+  }
 }
