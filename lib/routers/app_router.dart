@@ -1,3 +1,4 @@
+import 'package:education_app/screens/course_page.dart';
 import 'package:education_app/screens/forget_pass_page.dart';
 import 'package:education_app/screens/home_page.dart';
 import 'package:education_app/screens/login_page.dart';
@@ -43,6 +44,11 @@ final GoRouter appRouter = GoRouter(
       path: '/subject',
       name: 'subject',
       builder: (context, state) => const SubjectPage(),
+    ),
+    GoRoute(
+      path: '/courses',
+      name: 'courses',
+      builder: (context, state) => const CoursePage(),
     ),
   ],
 );
