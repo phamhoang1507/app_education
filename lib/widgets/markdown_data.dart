@@ -4,12 +4,14 @@ import 'package:markdown_widget/markdown_widget.dart';
 
 class MarkdownData extends StatefulWidget {
   final String assetPath;
+  final String title;
   final String? version;
   final String? updateTime;
 
   const MarkdownData({
     super.key,
     required this.assetPath,
+    required this.title,
     this.version,
     this.updateTime,
   });
@@ -55,8 +57,8 @@ class _MarkdownDataState extends State<MarkdownData> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text(
-          'Terms & Conditions',
+        title: Text(
+          widget.title,
           style: TextStyle(color: Colors.black),
         ),
       ),
