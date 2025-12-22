@@ -234,7 +234,7 @@ class ProfilePage extends StatelessWidget {
                             children: [
                               Custombar(
                                 onTap: () {
-                                  print(123);
+                                  context.push('/terms');
                                 },
                                 leading: IconText(
                                   text: 'Terms & conditions',
