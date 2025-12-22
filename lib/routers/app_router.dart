@@ -2,6 +2,7 @@ import 'package:education_app/screens/course_page.dart';
 import 'package:education_app/screens/forget_pass_page.dart';
 import 'package:education_app/screens/home_page.dart';
 import 'package:education_app/screens/login_page.dart';
+import 'package:education_app/screens/policy_page.dart';
 import 'package:education_app/screens/profile_page.dart';
 import 'package:education_app/screens/register_page.dart';
 import 'package:education_app/screens/subject_page.dart';
@@ -55,6 +56,11 @@ final GoRouter appRouter = GoRouter(
       path: '/terms',
       name: 'terms',
       builder: (context, state) => const TermsPage(),
+    ),
+    GoRoute(
+      path: '/policy',
+      name: 'policy',
+      builder: (context, state) => const PolicyPage(),
     ),
   ],
 );

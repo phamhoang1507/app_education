@@ -247,7 +247,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                               Custombar(
                                 onTap: () {
-                                  print(123);
+                                  context.push('/policy');
                                 },
                                 isLast: true,
                                 leading: IconText(
