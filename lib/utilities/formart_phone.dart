@@ -1,4 +1,8 @@
-String formatToE164(String phone, {String? countryCode}) {
+import 'package:education_app/extensions/l10n.dart';
+import 'package:flutter/material.dart';
+
+String formatToE164(String phone,BuildContext context, {String? countryCode}) {
+  final l10n = context.l10n;
   phone = phone.trim().replaceAll(RegExp(r'[^\d]'), '');
 
   if (phone.startsWith('+')) {
@@ -11,5 +15,5 @@ String formatToE164(String phone, {String? countryCode}) {
     }
   }
 
-  throw ArgumentError('Số điện thoại không hợp lệ. Phải bắt đầu bằng 0 hoặc +');
+  throw ArgumentError(l10n.errorInvalidPhoneFormat);
 }

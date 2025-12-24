@@ -1,3 +1,4 @@
+import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/widgets/markdown_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -14,8 +15,16 @@ class TermsPage extends StatelessWidget {
     };
   }
 
+  String _getFilePath(BuildContext context) {
+    final language = Localizations.localeOf(context).languageCode;
+    return language == 'vi'
+        ? 'assets/markdown/terms_vi.md'
+        : 'assets/markdown/terms_en.md';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return FutureBuilder<Map<String, String>>(
       future: _getPackageInfo(),
       builder: (context, snapshot) {
@@ -30,8 +39,8 @@ class TermsPage extends StatelessWidget {
           );
         }
         return MarkdownData(
-          assetPath: 'assets/markdown/terms_vi.md',
-          title: 'Terms & Conditions',
+          assetPath: _getFilePath(context),
+          title: l10n.termsConditions,
           version: snapshot.data?['version'] ?? '',
           updateTime: snapshot.data?['updateTime'] ?? '',
         );

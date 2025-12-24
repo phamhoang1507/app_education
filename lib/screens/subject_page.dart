@@ -1,3 +1,4 @@
+import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/model/subject.dart';
 import 'package:education_app/repositories/subject_repository.dart';
 import 'package:education_app/utilities/all_card.dart';
@@ -12,6 +13,7 @@ class SubjectPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final subjectRepo = SubjectRepository();
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -26,8 +28,8 @@ class SubjectPage extends StatelessWidget {
           ),
           onPressed: () => context.pop(),
         ),
-        title: const Text(
-          'Live Tutoring',
+        title: Text(
+          l10n.liveTutoring,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w400,
@@ -47,8 +49,8 @@ class SubjectPage extends StatelessWidget {
                 children: [
                   const FormSearch(),
                   const SizedBox(height: 16),
-                  const Text(
-                    'All Live Subject Tutoring',
+                  Text(
+                    l10n.allLiveSubjectTutoring,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -73,7 +75,7 @@ class SubjectPage extends StatelessWidget {
                   }
                   final List<Subject> subjects = snapshot.data ?? [];
                   if (subjects.isEmpty) {
-                    return const Center(child: Text('Không có dữ liệu'));
+                    return Center(child: Text(l10n.noData));
                   }
 
                   return SingleChildScrollView(
@@ -82,7 +84,7 @@ class SubjectPage extends StatelessWidget {
                       runSpacing: 10,
                       alignment: WrapAlignment.start,
                       children: subjects
-                          .map((subject) => buildSubjectCard(subject))
+                          .map((subject) => buildSubjectCard(context, subject))
                           .toList(),
                     ),
                   );

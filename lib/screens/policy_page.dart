@@ -1,3 +1,4 @@
+import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/widgets/markdown_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,8 +16,16 @@ class PolicyPage extends StatelessWidget {
     };
   }
 
+  String _getFilePath(BuildContext context) {
+    final language = Localizations.localeOf(context).languageCode;
+    return language == 'vi'
+        ? 'assets/markdown/policy_vi.md'
+        : 'assets/markdown/policy_en.md';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return FutureBuilder(
       future: _getPackageInfo(),
       builder: (context, asyncSnapshot) {
@@ -32,8 +41,8 @@ class PolicyPage extends StatelessWidget {
         }
         final data = asyncSnapshot.data as Map<String, String>;
         return MarkdownData(
-          assetPath: 'assets/markdown/policy_vi.md',
-          title: 'Privacy Policy',
+          assetPath: _getFilePath(context),
+          title: l10n.privacyPolicy,
           version: data['version'] ?? '',
           updateTime: data['updateTime'] ?? '',
         );

@@ -1,18 +1,21 @@
+import 'package:education_app/extensions/l10n.dart';
+import 'package:flutter/material.dart';
+
 class ExceptionFirebase {
-  static String getErrorFirebase(e) {
-    String errorMessage = 'Đã xảy ra lỗi. Vui lòng thử lại.';
+  static String getErrorFirebase(dynamic e, BuildContext context) {
+    final l10n = context.l10n;
+    String errorMessage = l10n.errorDefault;
 
     if (e.code == 'invalid-credential') {
-      errorMessage =
-          'Thông tin đăng nhập không đúng hoặc đã hết hạn. Vui lòng kiểm tra và thử lại.';
+      errorMessage = l10n.errorInvalidCredential;
     } else if (e.code == 'user-not-found') {
-      errorMessage = 'Tài khoản không tồn tại.';
+      errorMessage = l10n.errorUserNotFound;
     } else if (e.code == 'wrong-password') {
-      errorMessage = 'Mật khẩu không đúng.';
+      errorMessage = l10n.errorWrongPassword;
     } else if (e.code == 'too-many-requests') {
-      errorMessage = 'Quá nhiều lần thử. Vui lòng chờ 1 phút.';
+      errorMessage = l10n.errorTooManyRequests;
     } else if (e.code == 'expired-action-code') {
-      errorMessage = 'Mã xác thực đã hết hạn. Vui lòng yêu cầu mã mới.';
+      errorMessage = l10n.errorExpiredActionCode;
     }
     return errorMessage;
   }

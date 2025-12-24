@@ -1,3 +1,4 @@
+import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/utilities/common_variables.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ class TilteSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Column(
       children: [
         Row(
@@ -72,7 +74,7 @@ class TilteSlider extends StatelessWidget {
             final List<dynamic> datas = snapshot.data ?? [];
 
             if (datas.isEmpty) {
-              return const Center(child: Text('Không có dữ liệu'));
+              return Center(child: Text(l10n.noData));
             }
 
             return SingleChildScrollView(

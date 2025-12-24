@@ -1,3 +1,4 @@
+import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/model/course.dart';
 import 'package:education_app/model/instructor.dart';
 import 'package:education_app/model/subject.dart';
@@ -5,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
-Widget buildSubjectCard(Subject subject) {
+Widget buildSubjectCard(BuildContext context, Subject subject) {
+  final l10n = context.l10n;
   return Container(
     width: 170,
     height: 90,
@@ -60,7 +62,7 @@ Widget buildSubjectCard(Subject subject) {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    ' - ${subject.tutorCount} Tutor',
+                    ' - ${l10n.tutorCount(subject.tutorCount)}',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white.withOpacity(0.9),
@@ -77,7 +79,8 @@ Widget buildSubjectCard(Subject subject) {
   );
 }
 
-Widget buildCourseDescription(Course course) {
+Widget buildCourseDescription(BuildContext context, Course course) {
+  final l10n = context.l10n!;
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -130,7 +133,7 @@ Widget buildCourseDescription(Course course) {
       Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         decoration: BoxDecoration(
-          color: !course.level.contains('Beginner')
+          color: !course.level.contains(l10n.beginner)
               ? Color(0xFFE7D5FF)
               : HexColor('#DCFCE7'),
           borderRadius: BorderRadius.circular(5),
@@ -141,7 +144,7 @@ Widget buildCourseDescription(Course course) {
   );
 }
 
-Widget buildCourseCard(Course course) {
+Widget buildCourseCard(BuildContext context, Course course) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -157,7 +160,7 @@ Widget buildCourseCard(Course course) {
         ),
       ),
       SizedBox(height: 8),
-      buildCourseDescription(course),
+      buildCourseDescription(context,course),
     ],
   );
 }
