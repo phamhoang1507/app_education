@@ -1,3 +1,4 @@
+import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/services/auth_service.dart';
 import 'package:education_app/widgets/filed_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -76,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    final l10n = context.l10n;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -104,8 +106,8 @@ class _LoginPageState extends State<LoginPage> {
                                 children: [
                                   FiledText(
                                     controller: _controllerEmail,
-                                    hintText: 'Input email',
-                                    textTitle: 'Email',
+                                    hintText: l10n.inputEmail,
+                                    textTitle: l10n.email,
                                     keyForm: _keyEmail,
                                     hiddenText: false,
                                     leadIcon: Icons.email_outlined,
@@ -114,10 +116,10 @@ class _LoginPageState extends State<LoginPage> {
                                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
                                       ).hasMatch(value);
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter your email';
+                                        return l10n.pleaseEnterEmail;
                                       }
                                       if(emailValid != true) {
-                                        return 'Please enter a valid email';
+                                        return l10n.pleaseEnterValidEmail;
                                       }
                                       if (_loginError != null)
                                         return _loginError;
@@ -133,14 +135,14 @@ class _LoginPageState extends State<LoginPage> {
                                       Icons.visibility_outlined,
                                       Icons.visibility_off_outlined,
                                     ],
-                                    hintText: 'Input password',
-                                    textTitle: 'Password',
+                                    hintText: l10n.inputPassword,
+                                    textTitle: l10n.password,
                                     keyForm: _keyPassword,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter your password';
+                                        return l10n.pleaseEnterPassword;
                                       } else if (value.length < 8) {
-                                        return 'Please enter a valid password';
+                                        return l10n.pleaseEnterValidPassword;
                                       }
                                       if (_loginError != null)
                                         return _loginError;
@@ -174,8 +176,8 @@ class _LoginPageState extends State<LoginPage> {
                                               });
                                             },
                                           ),
-                                          const Text(
-                                            'Remember me',
+                                          Text(
+                                            l10n.rememberMe,
                                             style: TextStyle(fontSize: 14),
                                           ),
                                         ],
@@ -185,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                                           context.go('/forget');
                                         },
                                         child: Text(
-                                          'Forgot Password?',
+                                          l10n.forgotPassword,
                                           style: TextStyle(
                                             color: Theme.of(
                                               context,
@@ -202,29 +204,29 @@ class _LoginPageState extends State<LoginPage> {
                             : FiledText(
                                 controller: _controllerPhone,
                                 hintText: '+84',
-                                textTitle: 'Phone Number',
+                                textTitle: l10n.phoneNumber,
                                 keyForm: _keyPhone,
                                 hiddenText: false,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter your phone number';
+                                    return l10n.pleaseEnterPhone;
                                   }
                                   String phone = value.replaceAll(' ', '');
 
                                   if (phone.length < 10 || phone.length > 11) {
-                                    return 'Số điện thoại phải từ 10-11 số';
+                                    return l10n.errorPhoneLength;
                                   }
 
                                   if (!RegExp(r'^[0-9]+$').hasMatch(phone)) {
-                                    return 'Số điện thoại chỉ được chứa chữ số';
+                                    return l10n.errorPhoneDigitsOnly;
                                   }
 
                                   if (!phone.startsWith('0')) {
-                                    return 'Số điện thoại phải bắt đầu bằng 0';
+                                    return l10n.errorPhoneStartZero;
                                   }
 
                                   if (!RegExp(r'^0[0-9]{9}$').hasMatch(phone)) {
-                                    return 'Số điện thoại không hợp lệ';
+                                    return l10n.errorInvalidPhone;
                                   }
 
                                   return null;
@@ -240,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           child: Text(
-                            'Continue',
+                            l10n.continueText,
                             style: TextStyle(color: Colors.white),
                           ),
                           onPressed: () {
@@ -269,8 +271,8 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           child: Text(
                             _isLogEmail
-                                ? 'Login with Phone Number'
-                                : 'Login with Email',
+                                ? l10n.loginWithPhone
+                                : l10n.loginWithEmail,
                           ),
                         ),
                       ],
@@ -279,11 +281,11 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 40),
                   Text.rich(
                     TextSpan(
-                      text: "Don't have an account? ",
+                      text: l10n.dontHaveAccount,
                       style: TextStyle(color: Colors.grey),
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Register',
+                          text: l10n.register,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: HexColor('9649ED'),
@@ -307,7 +309,7 @@ class _LoginPageState extends State<LoginPage> {
                           endIndent: 10,
                         ),
                       ),
-                      Text('OR'),
+                      Text(l10n.or),
                       Expanded(
                         child: Divider(
                           color: Colors.grey,
@@ -334,7 +336,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         SvgPicture.asset('assets/images/google.svg'),
                         SizedBox(width: 10),
-                        Text('Continue with Google'),
+                        Text(l10n.continueWithGoogle),
                       ],
                     ),
                   ),
@@ -352,7 +354,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         SvgPicture.asset('assets/images/facebook.svg'),
                         SizedBox(width: 10),
-                        Text('Continue with Facebook'),
+                        Text(l10n.continueWithFacebook),
                       ],
                     ),
                   ),

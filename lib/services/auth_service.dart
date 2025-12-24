@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:education_app/model/user.dart';
 import 'package:education_app/utilities/formart_phone.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -87,8 +88,9 @@ class AuthServices {
     required Function(PhoneAuthCredential credential) completed,
     required Function(String error) failed,
     String? countryCode,
+    required BuildContext context,
   }) async {
-    String formattedPhone = formatToE164(phone, countryCode: countryCode);
+    String formattedPhone = formatToE164(phone, context, countryCode: countryCode);
     await _auth.verifyPhoneNumber(
       phoneNumber: formattedPhone,
       verificationCompleted: (c) async => completed(c),

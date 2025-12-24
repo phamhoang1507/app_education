@@ -1,3 +1,4 @@
+import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/model/user.dart';
 import 'package:education_app/services/auth_service.dart';
 import 'package:education_app/utilities/common_variables.dart';
@@ -16,6 +17,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final auth = AuthServices();
     final user = FirebaseAuth.instance.currentUser!;
     final myUser = auth.getUser(user.uid);
@@ -25,7 +27,7 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: true,
         title: Text(
-          'Profile',
+          l10n.profile,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
         ),
         leading: IconButton(
@@ -72,7 +74,7 @@ class ProfilePage extends StatelessWidget {
                       );
                     }
                     if (!snapshot.hasData || snapshot.data == null) {
-                      return Center(child: Text("Không tải được user"));
+                      return Center(child: Text(l10n.errorLoadUser));
                     }
                     final data = snapshot.data!;
                     return Column(
@@ -119,7 +121,7 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                   SizedBox(height: 4),
                                   Text(
-                                    data.phoneNumber ?? "Không số điện thoại",
+                                    data.phoneNumber ?? l10n.noPhoneNumber,
                                     style: TextStyle(fontSize: 14),
                                   ),
                                 ],
@@ -143,14 +145,14 @@ class ProfilePage extends StatelessWidget {
                           child: Column(
                             children: [
                               Custombar(
-                                leading: Text('User ID'),
+                                leading: Text(l10n.userId),
                                 late: Text(
                                   data.uid,
                                   style: TextStyle(fontWeight: FontWeight.w500),
                                 ),
                               ),
                               Custombar(
-                                leading: Text('Department'),
+                                leading: Text(l10n.department),
                                 isLast: true,
                                 late: Text(
                                   'Programer',
@@ -173,7 +175,7 @@ class ProfilePage extends StatelessWidget {
                                   print(123);
                                 },
                                 leading: IconText(
-                                  text: 'Personal Information',
+                                  text: l10n.personalInformation,
                                   icon: Icons.person_outline_outlined,
                                   color: Colors.black,
                                   sizeIcon: 25,
@@ -186,7 +188,7 @@ class ProfilePage extends StatelessWidget {
                                   print(123);
                                 },
                                 leading: IconText(
-                                  text: 'Payment',
+                                  text: l10n.payment,
                                   icon: Icons.payment_outlined,
                                   color: Colors.black,
                                   sizeIcon: 25,
@@ -199,7 +201,7 @@ class ProfilePage extends StatelessWidget {
                                   print(123);
                                 },
                                 leading: IconText(
-                                  text: 'Support',
+                                  text: l10n.support,
                                   icon: Icons.headset_mic_outlined,
                                   color: Colors.black,
                                   sizeIcon: 25,
@@ -213,7 +215,7 @@ class ProfilePage extends StatelessWidget {
                                 },
                                 isLast: true,
                                 leading: IconText(
-                                  text: 'Login & Security',
+                                  text: l10n.loginSecurity,
                                   icon: Icons.shield_outlined,
                                   color: Colors.black,
                                   sizeIcon: 25,
@@ -237,7 +239,7 @@ class ProfilePage extends StatelessWidget {
                                   context.push('/terms');
                                 },
                                 leading: IconText(
-                                  text: 'Terms & conditions',
+                                  text: l10n.termsConditions,
                                   icon: Icons.description_outlined,
                                   color: Colors.black,
                                   sizeIcon: 25,
@@ -251,7 +253,7 @@ class ProfilePage extends StatelessWidget {
                                 },
                                 isLast: true,
                                 leading: IconText(
-                                  text: 'Privacy Policy',
+                                  text: l10n.privacyPolicy,
                                   icon: Icons.description_outlined,
                                   color: Colors.black,
                                   sizeIcon: 25,
@@ -275,7 +277,7 @@ class ProfilePage extends StatelessWidget {
                                   _toggleDeleteAccount(context, auth);
                                 },
                                 leading: IconText(
-                                  text: 'Delete Account',
+                                  text: l10n.deleteAccount,
                                   icon: Icons.person_remove_outlined,
                                   color: Colors.black,
                                   sizeIcon: 25,
@@ -289,7 +291,7 @@ class ProfilePage extends StatelessWidget {
                                 },
                                 isLast: true,
                                 leading: IconText(
-                                  text: 'Logout',
+                                  text: l10n.logout,
                                   icon: Icons.logout_outlined,
                                   color: Colors.black,
                                   sizeIcon: 25,
@@ -316,9 +318,10 @@ class ProfilePage extends StatelessWidget {
     AuthServices auth,
   ) async {
     final user = auth.currentUser;
+    final l10n = context.l10n;
 
     if (user == null) {
-      showToast(context, 'Không có người dùng');
+      showToast(context, l10n.noUser);
       context.go('/login');
       return;
     }
@@ -326,18 +329,18 @@ class ProfilePage extends StatelessWidget {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Xác nhận xóa tài khoản'),
+        title: Text(l10n.confirmDeleteAccount),
         content: Text(
-          'Tài khoản của bạn sẽ bị xóa vĩnh viễn và không thể khôi phục.',
+          l10n.deleteAccountWarning,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Hủy'),
+            child: Text(l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text('Xóa'),
+            child: Text(l10n.delete),
           ),
         ],
       ),
@@ -350,22 +353,22 @@ class ProfilePage extends StatelessWidget {
     if (user.providerData.first.providerId == "password") {
       password = await inputConfirm(
         context,
-        'Xác nhận mật khẩu',
-        'Nhập mật khẩu',
+        l10n.confirmPassword,
+        l10n.enterPassword,
       );
       if (password == null) {
         return;
       }
       if (password.isEmpty) {
-        showToast(context, "Bạn chưa nhập password");
+        showToast(context, l10n.errorMissingPassword);
         return;
       }
     }
 
     if (user.providerData.first.providerId == "google.com") {
-      password = await inputConfirm(context, 'Xác nhận email', 'Nhập email');
+      password = await inputConfirm(context, l10n.confirmEmail, l10n.inputEmail);
       if (password == null || password.isEmpty) {
-        showToast(context, "Bạn chưa nhập email");
+        showToast(context, l10n.errorMissingPassword);
         return;
       }
     }
@@ -383,11 +386,11 @@ class ProfilePage extends StatelessWidget {
         Navigator.pop(context);
 
         context.go('/login');
-        showToast(context, "Xóa tài khoản thành công");
+        showToast(context, l10n.deleteAccountSuccess);
       }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
-      final errorMessage = ExceptionFirebase.getErrorFirebase(e);
+      final errorMessage = ExceptionFirebase.getErrorFirebase(e, context);
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -403,8 +406,8 @@ class ProfilePage extends StatelessWidget {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Lỗi kết nối. Vui lòng kiểm tra mạng.'),
+          SnackBar(
+            content: Text(l10n.errorConnection),
             backgroundColor: Colors.orange,
           ),
         );
@@ -414,25 +417,26 @@ class ProfilePage extends StatelessWidget {
 
   Future<String?> showPasswordInput(BuildContext context) async {
     final controller = TextEditingController();
+    final l10n = context.l10n;
 
     return showDialog<String>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Xác nhận mật khẩu"),
+          title: Text(l10n.confirmPassword),
           content: TextField(
             controller: controller,
             obscureText: true,
-            decoration: InputDecoration(labelText: "Nhập mật khẩu"),
+            decoration: InputDecoration(labelText: l10n.enterPassword),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, null),
-              child: Text("Hủy"),
+              child: Text(l10n.cancel),
             ),
             ElevatedButton(
               onPressed: () => Navigator.pop(context, controller.text),
-              child: Text("Tiếp tục"),
+              child: Text(l10n.continueText),
             ),
           ],
         );

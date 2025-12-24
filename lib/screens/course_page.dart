@@ -1,3 +1,4 @@
+import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/model/course.dart';
 import 'package:education_app/repositories/course_repository.dart';
 import 'package:education_app/utilities/all_card.dart';
@@ -14,11 +15,6 @@ class CoursePage extends StatefulWidget {
 }
 
 class _CoursePageState extends State<CoursePage> {
-  final List<DropdownMenuItem<String>> items = [
-    DropdownMenuItem(value: 'new', child: Text('New')),
-    DropdownMenuItem(value: 'trending', child: Text('Trending')),
-    DropdownMenuItem(value: 'price', child: Text('Price')),
-  ];
   late String selectedValue = 'new';
   Future<List<Course>>? courses;
 
@@ -46,6 +42,12 @@ class _CoursePageState extends State<CoursePage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n!;
+    final List<DropdownMenuItem<String>> items = [
+      DropdownMenuItem(value: 'new', child: Text(l10n.newest)),
+      DropdownMenuItem(value: 'trending', child: Text(l10n.trending)),
+      DropdownMenuItem(value: 'price', child: Text(l10n.price)),
+    ];
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -59,7 +61,7 @@ class _CoursePageState extends State<CoursePage> {
           onPressed: () => context.pop(),
         ),
         title: Text(
-          'All Courses',
+          l10n.allCourses,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w400,
@@ -80,7 +82,7 @@ class _CoursePageState extends State<CoursePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'All Courses',
+                    l10n.allCourses,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -89,7 +91,7 @@ class _CoursePageState extends State<CoursePage> {
                   ),
                   Row(
                     children: [
-                      Text('Sắp xếp'),
+                      Text(l10n.sort),
                       SizedBox(width: 8),
                       Container(
                         padding: EdgeInsets.symmetric(
@@ -138,7 +140,7 @@ class _CoursePageState extends State<CoursePage> {
                     }
                     final List<Course> courses = snapshot.data ?? [];
                     if (courses.isEmpty) {
-                      return const Center(child: Text('Không có dữ liệu'));
+                      return Center(child: Text(l10n.noData));
                     }
                     return SingleChildScrollView(
                       child: Column(
@@ -178,7 +180,7 @@ class _CoursePageState extends State<CoursePage> {
           Expanded(
             child: Container(
               padding: EdgeInsets.only(left: 15),
-              child: buildCourseDescription(course),
+              child: buildCourseDescription(context, course),
             ),
           ),
         ],

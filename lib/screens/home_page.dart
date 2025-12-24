@@ -1,3 +1,5 @@
+import 'package:education_app/extensions/l10n.dart';
+import 'package:education_app/main.dart';
 import 'package:education_app/model/course.dart';
 import 'package:education_app/model/instructor.dart';
 import 'package:education_app/model/subject.dart';
@@ -29,6 +31,8 @@ class _HomePageState extends State<HomePage> {
     final subjectRepo = SubjectRepository();
     final courseRepo = CourseRepository();
     final instructorRepo = InstructorRepository();
+    final l10n = context.l10n;
+    final local = Localizations.localeOf(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -40,6 +44,29 @@ class _HomePageState extends State<HomePage> {
           },
         ),
         actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: GestureDetector(
+              onTap: () {
+                if (local == Locale('en')) {
+                  MyApp.setLocale(context, Locale('vi'));
+                } else {
+                  MyApp.setLocale(context, Locale('en'));
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300),
+                  shape: BoxShape.circle,
+                ),
+                child: Text(
+                  local == Locale('vi') ? '🇬🇧' : '🇻🇳',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+            ),
+          ),
           // 🔔 Nút thông báo có badge
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6),
@@ -101,17 +128,13 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
               children: [
-                Container(
-                  child: Form(
-                    child: FormSearch(),
-                  ),
-                ),
+                Container(child: Form(child: FormSearch())),
                 SizedBox(height: 25),
                 TilteSlider(
-                  title: 'Live Subject Tutoring',
-                  textName: "All Subjects",
+                  title: l10n.liveSubjectTutoring,
+                  textName: l10n.allSubjects,
                   datas: subjectRepo.getSubject(),
-                  slide: (data) => buildSubjectCard(data as Subject),
+                  slide: (data) => buildSubjectCard(context, data as Subject),
                   onTap: () {
                     context.push('/subject');
                   },
@@ -120,26 +143,26 @@ class _HomePageState extends State<HomePage> {
                 buildBannerSection(context),
                 SizedBox(height: 15),
                 TilteSlider(
-                  title: 'Trending Courses',
-                  textName: "All Courses",
+                  title: l10n.trendingCourses,
+                  textName: l10n.allCourses,
                   datas: courseRepo.getCoursesTrending(),
-                  slide: (data) => buildCourseCard(data as Course),
+                  slide: (data) => buildCourseCard(context, data as Course),
                   onTap: () {
                     context.push('/courses');
                   },
                 ),
                 SizedBox(height: 15),
                 TilteSlider(
-                  title: 'Top Instructor of the Week',
+                  title: l10n.topInstructorOfWeek,
                   datas: instructorRepo.getInstructors(),
                   slide: (data) => buildInstructorCard(data as Instructor),
                 ),
                 SizedBox(height: 15),
                 TilteSlider(
-                  title: 'Top New Courses',
-                  textName: "All Courses",
+                  title: l10n.topNewCourses,
+                  textName: l10n.allCourses,
                   datas: courseRepo.getCoursesNew(),
-                  slide: (data) => buildCourseCard(data as Course),
+                  slide: (data) => buildCourseCard(context, data as Course),
                   onTap: () {
                     context.push('/courses');
                   },
@@ -153,6 +176,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildBannerSection(BuildContext context) {
+    final l10n = context.l10n!;
     return Container(
       width: double.infinity,
       height: 140,
@@ -195,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Text(
-                          'Get Lifetime ',
+                          l10n.getLifetime,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -203,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Text(
-                          'Deal',
+                          l10n.deal,
                           style: TextStyle(
                             fontSize: 20,
                             decoration: TextDecoration.underline,
@@ -217,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     Text(
-                      'Access to all on-demand courses',
+                      l10n.accessAllCourses,
                       style: TextStyle(fontSize: 13, color: Colors.black),
                     ),
                   ],
@@ -232,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   child: Text(
-                    'Redeem Now',
+                    l10n.redeemNow,
                     style: TextStyle(color: Colors.white, fontSize: 14),
                   ),
                 ),
@@ -244,12 +268,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  
-
   void _openLeftMenu(BuildContext context) {
     final auth = AuthServices();
     final user = FirebaseAuth.instance.currentUser!;
     final myUser = auth.getUser(user.uid);
+    final l10n = context.l10n;
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
@@ -293,7 +316,7 @@ class _HomePageState extends State<HomePage> {
                     );
                   }
                   if (!snapshot.hasData || snapshot.data == null) {
-                    return Center(child: Text("Không tải được user"));
+                    return Center(child: Text(l10n.errorLoadUser));
                   }
                   final data = snapshot.data!;
                   return Column(
@@ -342,7 +365,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  data.phoneNumber ?? "Không số điện thoại",
+                                  data.phoneNumber ?? l10n.noPhoneNumber,
                                   style: TextStyle(fontSize: 14),
                                 ),
                               ],
@@ -359,7 +382,7 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 SizedBox(height: 15),
                                 ButtonIconText(
-                                  text: 'Home',
+                                  text: l10n.home,
                                   icon: Icons.home_outlined,
                                   color: Colors.white,
                                   onTap: () {
@@ -369,7 +392,7 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 14,
                                 ),
                                 ButtonIconText(
-                                  text: 'Messages',
+                                  text: l10n.messages,
                                   icon: Icons.chat_bubble_outline,
                                   color: Colors.white,
                                   onTap: () {},
@@ -377,7 +400,7 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 14,
                                 ),
                                 ButtonIconText(
-                                  text: 'Tutor Bookings',
+                                  text: l10n.tutorBookings,
                                   icon: Icons.list_outlined,
                                   color: Colors.white,
                                   onTap: () {},
@@ -385,7 +408,7 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 14,
                                 ),
                                 ButtonIconText(
-                                  text: 'My Courses',
+                                  text: l10n.myCourses,
                                   icon: Icons.menu_book_outlined,
                                   color: Colors.white,
                                   onTap: () {},
@@ -393,7 +416,7 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 14,
                                 ),
                                 ButtonIconText(
-                                  text: 'Rating & Reviews',
+                                  text: l10n.ratingReviews,
                                   icon: Icons.star_border_outlined,
                                   color: Colors.white,
                                   onTap: () {},
@@ -401,7 +424,7 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 14,
                                 ),
                                 ButtonIconText(
-                                  text: 'Profile',
+                                  text: l10n.profile,
                                   icon: Icons.person_outline_outlined,
                                   color: Colors.white,
                                   onTap: () {
@@ -411,7 +434,7 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 14,
                                 ),
                                 ButtonIconText(
-                                  text: 'Logout',
+                                  text: l10n.logout,
                                   icon: Icons.logout_outlined,
                                   color: Colors.white,
                                   onTap: () {
@@ -436,5 +459,4 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
-
 }

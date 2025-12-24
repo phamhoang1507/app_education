@@ -1,3 +1,4 @@
+import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/services/auth_service.dart';
 import 'package:education_app/widgets/filed_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,6 +31,8 @@ class _RegisterPageState extends State<RegisterPage> {
     String email = _controllerEmail.text.trim();
     String password = _controllerPassword.text.trim();
     String name = _controllerDisplayName.text.trim();
+    final l10n = context.l10n;
+
     try {
       final signUpOk = await _auth.signUpEmail(email, password, name);
       if (signUpOk) {
@@ -41,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
     } on FirebaseAuthException catch (e) {
       if (e.code == "invalid-email") {
         setState(() {
-          _loginError = "Email không đúng định dạng. Vui lòng kiểm tra lại!";
+          _loginError = l10n.errorInvalidEmailFormat;
         });
         _formKey.currentState?.validate();
       }
@@ -52,6 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -78,13 +82,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         FiledText(
                           leadIcon: Icons.person_outline,
                           controller: _controllerDisplayName,
-                          hintText: 'Input Name',
-                          textTitle: 'Name',
+                          hintText: l10n.inputName,
+                          textTitle: l10n.name,
                           keyForm: _keyDisplayName,
                           hiddenText: false,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your name';
+                              return l10n.pleaseEnterName;
                             }
                             // to do duplicate
                             return null;
@@ -94,8 +98,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         FiledText(
                           leadIcon: Icons.email_outlined,
                           controller: _controllerEmail,
-                          hintText: 'Input Email',
-                          textTitle: 'Email',
+                          hintText: l10n.inputEmail,
+                          textTitle: l10n.email,
                           keyForm: _keyEmail,
                           hiddenText: false,
                           validator: (value) {
@@ -103,10 +107,10 @@ class _RegisterPageState extends State<RegisterPage> {
                               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
                             ).hasMatch(value);
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
+                              return l10n.pleaseEnterEmail;
                             }
                             if (emailValid == false) {
-                              return 'Please enter a valid email';
+                              return l10n.errorInvalidEmailFormat;
                             }
                             print(_loginError);
                             if (_loginError != null) return _loginError;
@@ -122,15 +126,15 @@ class _RegisterPageState extends State<RegisterPage> {
                             Icons.visibility_off_outlined,
                           ],
                           controller: _controllerPassword,
-                          hintText: 'Input Password',
-                          textTitle: 'Password',
+                          hintText: l10n.inputPassword,
+                          textTitle: l10n.password,
                           keyForm: _keyPassword,
                           hiddenText: false,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
+                              return l10n.pleaseEnterPassword;
                             } else if (value.length < 8) {
-                              return 'Please enter a valid password';
+                              return l10n.pleaseEnterValidPassword;
                             }
                             // to do duplicate
                             return null;
@@ -144,13 +148,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             Icons.visibility_off_outlined,
                           ],
                           controller: _controllerConfirmPassword,
-                          hintText: 'Input Password',
-                          textTitle: 'Confirm Password',
+                          hintText: l10n.inputPassword,
+                          textTitle: l10n.confirmPassword,
                           keyForm: _keyConfirmPassword,
                           hiddenText: false,
                           validator: (value) {
                             if (value != _controllerPassword.text) {
-                              return 'Password entered does not match.';
+                              return l10n.passwordNotMatch;
                             }
                             // to do duplicate
                             return null;
@@ -173,7 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             }
                           },
                           child: Text(
-                            'Signup',
+                            l10n.signup,
                             style: TextStyle(color: Colors.white),
                           ),
                         ),

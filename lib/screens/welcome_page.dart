@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/widgets/welcome_step.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -29,26 +30,28 @@ class _WelcomePageState extends State<WelcomePage>
   }
 
   String _getTitle(int step) {
+    final l10n = context.l10n;
     switch (step) {
       case 1:
-        return "Welcome to Educatory";
+        return l10n.welcomeToEducatory;
       case 2:
-        return "Live Session with Teachers";
+        return l10n.liveSessionWithTeachers;
       case 3:
-        return "Engage with Quizzes";
+        return l10n.engageWithQuizzes;
       default:
         return "";
     }
   }
 
   String _getDescription(int step) {
+    final l10n = context.l10n;
     switch (step) {
       case 1:
-        return "Your go-to platform for live sessions and on-demand courses. We're excited to help you learn and grow!";
+        return l10n.educatoryDescription;
       case 2:
-        return "Join live with top teachers. Session-based study with real-time feedback and support.";
+        return l10n.liveSessionDescription;
       case 3:
-        return "Test your knowledge with interactive quizzes. Track your progress and reinforce your learning!";
+        return l10n.quizzesDescription;
       default:
         return "";
     }
@@ -85,6 +88,7 @@ class _WelcomePageState extends State<WelcomePage>
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -164,8 +168,8 @@ class _WelcomePageState extends State<WelcomePage>
                           foregroundColor: HexColor('#9547ED'),
                           overlayColor: HexColor('#9547ED').withOpacity(0.1),
                         ),
-                        child: const Text(
-                          'Skip',
+                        child: Text(
+                          l10n.skip,
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -179,8 +183,8 @@ class _WelcomePageState extends State<WelcomePage>
                           ),
                           elevation: 3,
                         ),
-                        child: const Text(
-                          'Continue',
+                        child: Text(
+                          l10n.continueText,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
