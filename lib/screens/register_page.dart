@@ -1,10 +1,10 @@
 import 'package:education_app/extensions/l10n.dart';
+import 'package:education_app/routers/navigation_manager.dart';
 import 'package:education_app/services/auth_service.dart';
 import 'package:education_app/widgets/filed_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -38,7 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
       if (signUpOk) {
         final ok = await _auth.signInEmail(email, password);
         if (ok) {
-          context.go('/home');
+          context.nav.toHome(context);
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -60,6 +60,14 @@ class _RegisterPageState extends State<RegisterPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: true,
+        leadingWidth: 40,
+        titleSpacing: 0,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.keyboard_arrow_left_sharp),
+          color: Colors.black,
+          onPressed: () => context.nav.pop(context),
+        ),
         backgroundColor: Colors.white,
       ),
       body: SafeArea(

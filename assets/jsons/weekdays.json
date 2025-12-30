@@ -1,0 +1,37 @@
+[
+  {
+    "key": "monday",
+    "vi": "Thứ Hai",
+    "en": "Monday"
+  },
+  {
+    "key": "tuesday",
+    "vi": "Thứ Ba",
+    "en": "Tuesday"
+  },
+  {
+    "key": "wednesday",
+    "vi": "Thứ Tư",
+    "en": "Wednesday"
+  },
+  {
+    "key": "thursday",
+    "vi": "Thứ Năm",
+    "en": "Thursday"
+  },
+  {
+    "key": "friday",
+    "vi": "Thứ Sáu",
+    "en": "Friday"
+  },
+  {
+    "key": "saturday",
+    "vi": "Thứ Bảy",
+    "en": "Saturday"
+  },
+  {
+    "key": "sunday",
+    "vi": "Chủ Nhật",
+    "en": "Sunday"
+  }
+]

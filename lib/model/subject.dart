@@ -1,4 +1,5 @@
 class Subject {
+  final int id;
   final String name;
   final int tutorCount;
   final String icon;
@@ -6,6 +7,7 @@ class Subject {
   final String endColor;
 
   Subject({
+    required this.id,
     required this.name,
     required this.tutorCount,
     required this.icon,
@@ -14,6 +16,7 @@ class Subject {
   });
 
   Map<String, dynamic> toJson() => {
+    'id': id,
     'name': name,
     'tutorCount': tutorCount,
     'icon': icon,
@@ -23,6 +26,7 @@ class Subject {
 
   static Subject fromJson(dynamic json) {
     return Subject(
+      id: json['id'],
       name: json['name'],
       tutorCount: json['tutorCount'],
       icon: json['icon'],

@@ -4,6 +4,7 @@ class Instructor {
   final String image;
   final String subject;
   final double rating;
+  final double price;
   final int reviewCount;
   final bool isTopAuthor;
   final String bio;
@@ -18,6 +19,7 @@ class Instructor {
     required this.image,
     required this.subject,
     required this.rating,
+    required this.price,
     required this.reviewCount,
     required this.isTopAuthor,
     required this.bio,
@@ -34,6 +36,7 @@ class Instructor {
       image: json['image'] as String,
       subject: json['subject'] as String,
       rating: (json['rating'] as num).toDouble(),
+      price: (json['price'] as num).toDouble(),
       reviewCount: json['reviewCount'] as int,
       isTopAuthor: json['isTopAuthor'] as bool,
       bio: json['bio'] as String,

@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class FormSearch extends StatelessWidget {
-  const FormSearch({super.key});
+  final VoidCallback? onTap;
+  const FormSearch({
+    super.key,
+    this.onTap
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +30,13 @@ class FormSearch extends StatelessWidget {
                 color: Colors.grey,
                 margin: const EdgeInsets.only(right: 8.0),
               ),
-              SvgPicture.asset(
-                'assets/images/adjustments-horizontal.svg',
-                width: 20,
-                height: 20,
+              InkWell(
+                onTap: onTap,
+                child: SvgPicture.asset(
+                  'assets/images/adjustments-horizontal.svg',
+                  width: 20,
+                  height: 20,
+                ),
               ),
             ],
           ),

@@ -29,4 +29,41 @@ class InstructorRepository {
       return List.empty();
     }
   }
+
+  Future<List<Instructor>> getInstructorsByKeys(
+    int? subjectId,
+    List<dynamic> availabilitys,
+    List<dynamic> timeslots,
+    int? experience,
+    int rate,
+    int fromPrice,
+    int toPrice,
+  ) async {
+    try {
+      final slots = <String>[];
+      for (final d in availabilitys) {
+        for (final t in timeslots) {
+          slots.add('${d}_$t');
+        }
+      }
+      final query = await _db
+          .collection('instructor')
+          .where('subjectId', isEqualTo: subjectId)
+          .where('availableSlots', arrayContainsAny: slots)
+          .where('rating', isGreaterThanOrEqualTo: rate)
+          .where('experience', isGreaterThanOrEqualTo: experience)
+          .where('price', isGreaterThanOrEqualTo: fromPrice)
+          .where('price', isLessThanOrEqualTo: toPrice)
+          .orderBy('rating', descending: true)
+          .orderBy('reviewCount', descending: true)
+          .get();
+      final instructors = query.docs
+          .map((e) => Instructor.fromJson(e))
+          .toList();
+      return instructors;
+    } catch (e) {
+      print('Lỗi: $e');
+      return List.empty();
+    }
+  }
 }

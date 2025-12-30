@@ -1,11 +1,11 @@
 import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/model/course.dart';
 import 'package:education_app/repositories/course_repository.dart';
+import 'package:education_app/routers/navigation_manager.dart';
 import 'package:education_app/utilities/all_card.dart';
 import 'package:education_app/utilities/common_variables.dart';
 import 'package:education_app/widgets/form_search.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class CoursePage extends StatefulWidget {
   const CoursePage({super.key});
@@ -52,13 +52,14 @@ class _CoursePageState extends State<CoursePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
+        leadingWidth: 40,
+        titleSpacing: 0,
+        elevation: 0,
         leading: IconButton(
-          icon: const Icon(
-            Icons.keyboard_arrow_left_sharp,
-            color: Colors.black,
-          ),
-          onPressed: () => context.pop(),
+          icon: Icon(Icons.keyboard_arrow_left_sharp),
+          color: Colors.black,
+          onPressed: () => context.nav.pop(context),
         ),
         title: Text(
           l10n.allCourses,
