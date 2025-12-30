@@ -1,11 +1,11 @@
 import 'package:education_app/extensions/l10n.dart';
+import 'package:education_app/routers/navigation_manager.dart';
 import 'package:education_app/services/auth_service.dart';
 import 'package:education_app/widgets/filed_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class LoginPage extends StatefulWidget {
@@ -31,12 +31,12 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _handleGoogle() async {
     final ok = await _auth.signInGoogle();
     if (ok) {
-      context.go('/home');
+      context.nav.toHome(context);
     }
   }
 
   Future<void> _handlePhone() async {
-    context.go('/home');
+    context.nav.toHome(context);
   }
 
   Future<void> _handleEmailPassword() async {
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
       final ok = await _auth.signInEmail(email, password);
       if (ok && mounted) {
         _loginError = null;
-        context.go('/home');
+        context.nav.toHome(context);
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == "invalid-credential" ||
@@ -184,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          context.go('/forget');
+                                          context.nav.toForgetPassword(context);
                                         },
                                         child: Text(
                                           l10n.forgotPassword,
@@ -292,7 +292,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              context.push('/register');
+                              context.nav.toRegister(context);
                             },
                         ),
                       ],

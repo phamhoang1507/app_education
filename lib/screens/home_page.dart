@@ -7,6 +7,7 @@ import 'package:education_app/model/user.dart';
 import 'package:education_app/repositories/course_repository.dart';
 import 'package:education_app/repositories/instructor_repository.dart';
 import 'package:education_app/repositories/subject_repository.dart';
+import 'package:education_app/routers/navigation_manager.dart';
 import 'package:education_app/services/auth_service.dart';
 import 'package:education_app/utilities/all_card.dart';
 import 'package:education_app/widgets/button_icon_text.dart';
@@ -15,7 +16,6 @@ import 'package:education_app/widgets/tilte_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:go_router/go_router.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class HomePage extends StatefulWidget {
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
             child: GestureDetector(
               onTap: () {
                 print('cart');
-                context.go('/login');
+                context.nav.toLogin(context);
               },
               child: Container(
                 padding: const EdgeInsets.all(8),
@@ -128,7 +128,15 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
               children: [
-                Container(child: Form(child: FormSearch())),
+                Container(
+                  child: Form(
+                    child: FormSearch(
+                      onTap: () {
+                        context.nav.toFilter(context);
+                      },
+                    ),
+                  ),
+                ),
                 SizedBox(height: 25),
                 TilteSlider(
                   title: l10n.liveSubjectTutoring,
@@ -136,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                   datas: subjectRepo.getSubject(),
                   slide: (data) => buildSubjectCard(context, data as Subject),
                   onTap: () {
-                    context.push('/subject');
+                    context.nav.toSubject(context);
                   },
                 ),
                 SizedBox(height: 50),
@@ -148,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                   datas: courseRepo.getCoursesTrending(),
                   slide: (data) => buildCourseCard(context, data as Course),
                   onTap: () {
-                    context.push('/courses');
+                    context.nav.toCourses(context);
                   },
                 ),
                 SizedBox(height: 15),
@@ -164,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                   datas: courseRepo.getCoursesNew(),
                   slide: (data) => buildCourseCard(context, data as Course),
                   onTap: () {
-                    context.push('/courses');
+                    context.nav.toCourses(context);
                   },
                 ),
               ],
@@ -428,7 +436,7 @@ class _HomePageState extends State<HomePage> {
                                   icon: Icons.person_outline_outlined,
                                   color: Colors.white,
                                   onTap: () {
-                                    context.push('/profile');
+                                    context.nav.toProfile(context);
                                   },
                                   sizeIcon: 25,
                                   fontSize: 14,
@@ -439,7 +447,7 @@ class _HomePageState extends State<HomePage> {
                                   color: Colors.white,
                                   onTap: () {
                                     auth.signOut();
-                                    context.go('/login');
+                                    context.nav.toLogin(context);
                                   },
                                   sizeIcon: 25,
                                   fontSize: 14,

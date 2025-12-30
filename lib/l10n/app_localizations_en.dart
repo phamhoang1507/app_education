@@ -352,4 +352,72 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get search => 'Search';
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String get lookingFor => 'I\'m looking for';
+
+  @override
+  String get tutors => 'Tutors';
+
+  @override
+  String get courses => 'Courses';
+
+  @override
+  String get subject => 'Subject';
+
+  @override
+  String get selectSubject => 'Select Subject';
+
+  @override
+  String get availability => 'Availability';
+
+  @override
+  String get timeslots => 'Timeslots';
+
+  @override
+  String get tutoringExperience => 'Tutoring Experience';
+
+  @override
+  String get selectExperience => 'Select Experience';
+
+  @override
+  String get rating => 'Rating';
+
+  @override
+  String starsAndUp(Object rating) {
+    return '$rating Stars and up';
+  }
+
+  @override
+  String get hourlyRate => 'Hourly Rate';
+
+  @override
+  String get resetFilters => 'Reset Filters';
+
+  @override
+  String get applyFilters => 'Apply Filters';
+
+  @override
+  String get filteredResults => 'Filtered Results';
+
+  @override
+  String get allTutors => 'All Tutors';
+
+  @override
+  String get noTutorsFound => 'No tutors found';
+
+  @override
+  String pricePerHour(Object price) {
+    return '\$$price/hr';
+  }
+
+  @override
+  String get errorSelectAtLeastOneDay => 'Please select at least one day';
+
+  @override
+  String get errorSelectAtLeastOneTimeSlot =>
+      'Please select at least one time slot during the day';
 }

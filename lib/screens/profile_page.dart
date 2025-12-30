@@ -1,5 +1,6 @@
 import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/model/user.dart';
+import 'package:education_app/routers/navigation_manager.dart';
 import 'package:education_app/services/auth_service.dart';
 import 'package:education_app/utilities/common_variables.dart';
 import 'package:education_app/utilities/flutter_toast.dart';
@@ -236,7 +237,7 @@ class ProfilePage extends StatelessWidget {
                             children: [
                               Custombar(
                                 onTap: () {
-                                  context.push('/terms');
+                                  context.nav.toTerms(context);
                                 },
                                 leading: IconText(
                                   text: l10n.termsConditions,
@@ -249,7 +250,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                               Custombar(
                                 onTap: () {
-                                  context.push('/policy');
+                                  context.nav.toPolicy(context);
                                 },
                                 isLast: true,
                                 leading: IconText(
@@ -287,7 +288,7 @@ class ProfilePage extends StatelessWidget {
                               Custombar(
                                 onTap: () {
                                   auth.signOut();
-                                  context.go('/login');
+                                  context.nav.toLogin(context);
                                 },
                                 isLast: true,
                                 leading: IconText(
@@ -322,7 +323,7 @@ class ProfilePage extends StatelessWidget {
 
     if (user == null) {
       showToast(context, l10n.noUser);
-      context.go('/login');
+      context.nav.toLogin(context);
       return;
     }
 
@@ -385,7 +386,7 @@ class ProfilePage extends StatelessWidget {
       if (context.mounted) {
         Navigator.pop(context);
 
-        context.go('/login');
+        context.nav.toLogin(context);
         showToast(context, l10n.deleteAccountSuccess);
       }
     } on FirebaseAuthException catch (e) {

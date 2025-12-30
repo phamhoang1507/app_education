@@ -751,6 +751,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search'**
   String get search;
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
+
+  /// No description provided for @lookingFor.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m looking for'**
+  String get lookingFor;
+
+  /// No description provided for @tutors.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutors'**
+  String get tutors;
+
+  /// No description provided for @courses.
+  ///
+  /// In en, this message translates to:
+  /// **'Courses'**
+  String get courses;
+
+  /// No description provided for @subject.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get subject;
+
+  /// No description provided for @selectSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Subject'**
+  String get selectSubject;
+
+  /// No description provided for @availability.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get availability;
+
+  /// No description provided for @timeslots.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeslots'**
+  String get timeslots;
+
+  /// No description provided for @tutoringExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutoring Experience'**
+  String get tutoringExperience;
+
+  /// No description provided for @selectExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Experience'**
+  String get selectExperience;
+
+  /// No description provided for @rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating'**
+  String get rating;
+
+  /// No description provided for @starsAndUp.
+  ///
+  /// In en, this message translates to:
+  /// **'{rating} Stars and up'**
+  String starsAndUp(Object rating);
+
+  /// No description provided for @hourlyRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly Rate'**
+  String get hourlyRate;
+
+  /// No description provided for @resetFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Filters'**
+  String get resetFilters;
+
+  /// No description provided for @applyFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Filters'**
+  String get applyFilters;
+
+  /// No description provided for @filteredResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Filtered Results'**
+  String get filteredResults;
+
+  /// No description provided for @allTutors.
+  ///
+  /// In en, this message translates to:
+  /// **'All Tutors'**
+  String get allTutors;
+
+  /// No description provided for @noTutorsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No tutors found'**
+  String get noTutorsFound;
+
+  /// No description provided for @pricePerHour.
+  ///
+  /// In en, this message translates to:
+  /// **'\${price}/hr'**
+  String pricePerHour(Object price);
+
+  /// No description provided for @errorSelectAtLeastOneDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select at least one day'**
+  String get errorSelectAtLeastOneDay;
+
+  /// No description provided for @errorSelectAtLeastOneTimeSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select at least one time slot during the day'**
+  String get errorSelectAtLeastOneTimeSlot;
 }
 
 class _AppLocalizationsDelegate

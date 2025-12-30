@@ -346,4 +346,72 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get search => 'Tìm kiếm';
+
+  @override
+  String get filters => 'Bộ lọc';
+
+  @override
+  String get lookingFor => 'Tôi đang tìm kiếm';
+
+  @override
+  String get tutors => 'Gia sư';
+
+  @override
+  String get courses => 'Khóa học';
+
+  @override
+  String get subject => 'Môn học';
+
+  @override
+  String get selectSubject => 'Chọn môn học';
+
+  @override
+  String get availability => 'Lịch trống';
+
+  @override
+  String get timeslots => 'Khung giờ';
+
+  @override
+  String get tutoringExperience => 'Kinh nghiệm giảng dạy';
+
+  @override
+  String get selectExperience => 'Chọn kinh nghiệm';
+
+  @override
+  String get rating => 'Đánh giá';
+
+  @override
+  String starsAndUp(Object rating) {
+    return 'Từ $rating sao trở lên';
+  }
+
+  @override
+  String get hourlyRate => 'Giá theo giờ';
+
+  @override
+  String get resetFilters => 'Thiết lập lại';
+
+  @override
+  String get applyFilters => 'Áp dụng';
+
+  @override
+  String get filteredResults => 'Kết quả lọc';
+
+  @override
+  String get allTutors => 'Tất cả gia sư';
+
+  @override
+  String get noTutorsFound => 'Không tìm thấy gia sư nào';
+
+  @override
+  String pricePerHour(Object price) {
+    return '\$$price/giờ';
+  }
+
+  @override
+  String get errorSelectAtLeastOneDay => 'Vui lòng chọn ít nhất một ngày';
+
+  @override
+  String get errorSelectAtLeastOneTimeSlot =>
+      'Vui lòng chọn ít nhất một khung giờ trong ngày';
 }

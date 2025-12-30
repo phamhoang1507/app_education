@@ -1,3 +1,4 @@
+import 'package:education_app/routers/navigation_manager.dart';
 import 'package:education_app/utilities/common_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:markdown_widget/markdown_widget.dart';
@@ -56,18 +57,22 @@ class _MarkdownDataState extends State<MarkdownData> {
     }
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          widget.title,
-          style: TextStyle(color: Colors.black),
+        automaticallyImplyLeading: true,
+        leadingWidth: 40,
+        titleSpacing: 0,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.keyboard_arrow_left_sharp),
+          color: Colors.black,
+          onPressed: () => context.nav.pop(context),
         ),
+        backgroundColor: Colors.white,
+        title: Text(widget.title, style: TextStyle(color: Colors.black)),
       ),
       body: SafeArea(
         child: Scrollbar(
           child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
+            decoration: BoxDecoration(color: Colors.white),
             child: Padding(
               padding: commonMarkDownPadding,
               child: MarkdownWidget(

@@ -13,7 +13,8 @@
       1
     ],
     "specialization": "Chemistry Fundamentals",
-    "description": "Wilson specializes in making complex chemistry concepts easy to understand"
+    "description": "Wilson specializes in making complex chemistry concepts easy to understand",
+    "experience": 3
   },
   {
     "id": 2,
@@ -29,7 +30,8 @@
       2
     ],
     "specialization": "Organic Chemistry",
-    "description": "Thompson brings research experience to her teaching methodology"
+    "description": "Thompson brings research experience to her teaching methodology",
+    "experience": 2
   },
   {
     "id": 3,
@@ -45,7 +47,8 @@
       3
     ],
     "specialization": "World History",
-    "description": "History uses engaging storytelling to teach historical events"
+    "description": "History uses engaging storytelling to teach historical events",
+    "experience": 1
   },
   {
     "id": 4,
@@ -61,7 +64,8 @@
       4
     ],
     "specialization": "Modern History Analysis",
-    "description": "King analyzes contemporary historical events with critical perspective"
+    "description": "King analyzes contemporary historical events with critical perspective",
+    "experience": 5
   },
   {
     "id": 5,
@@ -77,7 +81,8 @@
       5
     ],
     "specialization": "IT Fundamentals",
-    "description": "John brings real-world IT experience to beginner students"
+    "description": "John brings real-world IT experience to beginner students",
+    "experience": 6
   },
   {
     "id": 6,
@@ -93,7 +98,8 @@
       6
     ],
     "specialization": "Advanced Programming",
-    "description": "Mike is a passionate programmer dedicated to teaching advanced concepts"
+    "description": "Mike is a passionate programmer dedicated to teaching advanced concepts",
+    "experience": 6
   },
   {
     "id": 7,
@@ -109,7 +115,8 @@
       7
     ],
     "specialization": "Literature Classics",
-    "description": "Foster brings deep literary analysis to classic texts"
+    "description": "Foster brings deep literary analysis to classic texts",
+    "experience": 3
   },
   {
     "id": 8,
@@ -125,7 +132,8 @@
       8
     ],
     "specialization": "Creative Writing",
-    "description": "James helps aspiring writers develop their unique voice and craft"
+    "description": "James helps aspiring writers develop their unique voice and craft",
+    "experience": 3
   },
   {
     "id": 9,
@@ -141,7 +149,8 @@
       9
     ],
     "specialization": "Mathematics Foundations",
-    "description": "Newton makes mathematics accessible to students of all levels"
+    "description": "Newton makes mathematics accessible to students of all levels",
+    "experience": 3
   },
   {
     "id": 10,
@@ -157,7 +166,8 @@
       10
     ],
     "specialization": "Calculus",
-    "description": "Algebra is expert in advanced mathematical concepts"
+    "description": "Algebra is expert in advanced mathematical concepts",
+    "experience": 1
   },
   {
     "id": 11,
@@ -173,7 +183,8 @@
       11
     ],
     "specialization": "Physics Fundamentals",
-    "description": "Hawking explains complex physics concepts with clarity"
+    "description": "Hawking explains complex physics concepts with clarity",
+    "experience": 3
   },
   {
     "id": 12,
@@ -189,6 +200,7 @@
       12
     ],
     "specialization": "Quantum Physics",
-    "description": "Grace makes quantum mechanics understandable and fascinating"
+    "description": "Grace makes quantum mechanics understandable and fascinating",
+    "experience": 4
   }
 ]
