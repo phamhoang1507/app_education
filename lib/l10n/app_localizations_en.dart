@@ -420,4 +420,15 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorSelectAtLeastOneTimeSlot =>
       'Please select at least one time slot during the day';
+
+  @override
+  String durationHours(Object time) {
+    return '${time}hr';
+  }
+
+  @override
+  String get noCoursesFound => 'No courses found';
+
+  @override
+  String get advanced => 'Advanced';
 }

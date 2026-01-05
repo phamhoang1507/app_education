@@ -2,6 +2,7 @@ import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/model/course.dart';
 import 'package:education_app/model/instructor.dart';
 import 'package:education_app/model/subject.dart';
+import 'package:education_app/utilities/format_time.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
@@ -90,9 +91,7 @@ Widget buildCourseDescription(BuildContext context, Course course) {
         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
       ),
       SizedBox(height: 8),
-      Row(
-        children: [Text(course.instructor), Text(' - '), Text(course.duration)],
-      ),
+      Text('${course.instructor} - ${l10n.durationHours(decimalHourToTime(course.duration))}'),
       SizedBox(height: 8),
       Container(
         width: 230,
@@ -133,12 +132,12 @@ Widget buildCourseDescription(BuildContext context, Course course) {
       Container(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         decoration: BoxDecoration(
-          color: !course.level.contains(l10n.beginner)
+          color: course.level == 2
               ? Color(0xFFE7D5FF)
               : HexColor('#DCFCE7'),
           borderRadius: BorderRadius.circular(5),
         ),
-        child: Text(course.level),
+        child: Text(course.level == 1 ? l10n.beginner: l10n.advanced),
       ),
     ],
   );
@@ -214,4 +213,34 @@ IconData getIcon(String icon) {
     default:
       return Icons.computer;
   }
+}
+
+
+Widget buildCardCourse(BuildContext context, Course course) {
+  final sizeImage = MediaQuery.of(context).size.width * 0.38;
+  return Container(
+    padding: EdgeInsets.only(bottom: 18),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            image: DecorationImage(
+              image: AssetImage(course.image),
+              fit: BoxFit.cover,
+            ),
+          ),
+          width: sizeImage,
+          height: sizeImage,
+        ),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.only(left: 15),
+            child: buildCourseDescription(context, course),
+          ),
+        ),
+      ],
+    ),
+  );
 }

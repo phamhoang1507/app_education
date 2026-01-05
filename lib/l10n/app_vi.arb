@@ -135,5 +135,8 @@
   "noTutorsFound": "Không tìm thấy gia sư nào",
   "pricePerHour": "${price}/giờ",
   "errorSelectAtLeastOneDay": "Vui lòng chọn ít nhất một ngày",
-  "errorSelectAtLeastOneTimeSlot": "Vui lòng chọn ít nhất một khung giờ trong ngày"
+  "errorSelectAtLeastOneTimeSlot": "Vui lòng chọn ít nhất một khung giờ trong ngày",
+  "durationHours": "{time} giờ",
+  "noCoursesFound": "Không tìm thấy khóa học nào",
+  "advanced": "Trình độ cao"
 }

@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Course {
   final int id;
   final String title;
   final String instructor;
-  final String duration;
+  final double duration;
   final double price;
   final double originalPrice;
   final double rating;
@@ -11,7 +13,7 @@ class Course {
   final String image;
   final String description;
   final String category;
-  final String level;
+  final int level;
   final String subject;
   final DateTime createdAt;
 
@@ -34,13 +36,20 @@ class Course {
   });
 
   factory Course.fromJson(dynamic json) {
-    DateTime parsedDate =
-        DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now();
+    DateTime parsedDate;
+
+    if (json['createdAt'] is Timestamp) {
+      parsedDate = (json['createdAt'] as Timestamp).toDate();
+    } else if (json['createdAt'] is String) {
+      parsedDate = DateTime.tryParse(json['createdAt']) ?? DateTime.now();
+    } else {
+      parsedDate = DateTime.now();
+    }
     return Course(
       id: json['id'] as int,
       title: json['title'] as String,
       instructor: json['instructor'] as String,
-      duration: json['duration'] as String,
+      duration: (json['duration'] as num).toDouble(),
       price: (json['price'] as num).toDouble(),
       originalPrice: (json['originalPrice'] as num).toDouble(),
       rating: (json['rating'] as num).toDouble(),
@@ -49,7 +58,7 @@ class Course {
       image: json['image'] as String,
       description: json['description'] as String,
       category: json['category'] as String,
-      level: json['level'] as String,
+      level: json['level'] as int,
       subject: json['subject'] as String,
       createdAt: parsedDate,
     );

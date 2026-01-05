@@ -1,5 +1,6 @@
 import 'package:education_app/extensions/l10n.dart';
 import 'package:education_app/model/subject.dart';
+import 'package:education_app/repositories/course_repository.dart';
 import 'package:education_app/repositories/instructor_repository.dart';
 import 'package:education_app/repositories/subject_repository.dart';
 import 'package:education_app/repositories/weekdays_repository.dart';
@@ -9,6 +10,8 @@ import 'package:education_app/widgets/form_dropdown.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+enum FilterField { day, timeslot, duration, released }
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -25,7 +28,24 @@ class _FilterPageState extends State<FilterPage> {
   final subjectRepo = SubjectRepository();
   final instructorRepo = InstructorRepository();
   final weekdaysRepo = WeekdaysRepository();
+  final courseRepo = CourseRepository();
   List<Subject> subjects = [];
+  List<dynamic> levels = [
+    {'id': 1, 'en': 'Beginner', 'vi': 'Cơ bản'},
+    {'id': 2, 'en': 'Advanced', 'vi': 'Trình độ cao'},
+  ];
+  List<dynamic> durations = [
+    {'id': 1, 'en': '<1 hr', 'vi': '<1 giờ'},
+    {'id': 2, 'en': '1-3 hr', 'vi': '1-3 giờ'},
+    {'id': 3, 'en': '3-6 hr', 'vi': '3-6 giờ'},
+    {'id': 4, 'en': '6+ hr', 'vi': '6+ giờ'},
+  ];
+  List<dynamic> releaseds = [
+    {'id': 1, 'en': 'In last 3 Month', 'vi': 'Trong 3 tháng qua'},
+    {'id': 2, 'en': 'In last 6 Month', 'vi': 'Trong 6 tháng qua'},
+    {'id': 3, 'en': 'In last 1 Year', 'vi': 'Trong 1 năm qua'},
+    {'id': 4, 'en': 'Over 1 Year', 'vi': 'Trên 1 năm'},
+  ];
   List<dynamic> weekdays = [];
   List<dynamic> timeslotsList = [
     {'key': 'morning', 'en': 'Morning', 'vi': 'Buổi sáng'},
@@ -40,11 +60,17 @@ class _FilterPageState extends State<FilterPage> {
     {'id': 5, 'en': '5+ years', 'vi': '5+ năm'},
   ];
   int? selectedSubjectId;
+  int? selectedlevelId;
+  int? selectedDurationId;
   int? selectedExperienceId;
+  int? selectedReleasedId;
   Set<String> selectedDays = {};
   Set<String> timeslots = {};
   int rating = 0;
-  bool showDayError = false;
+  final Map<FilterField, String?> errors = {
+    FilterField.day: null,
+    FilterField.timeslot: null,
+  };
 
   @override
   void initState() {
@@ -79,34 +105,68 @@ class _FilterPageState extends State<FilterPage> {
     });
   }
 
+  void onChangeLevel(int? value) {
+    setState(() {
+      selectedlevelId = value;
+    });
+  }
+
   void resetFilters() {
     setState(() {
       selectedSubjectId = null;
       selectedExperienceId = null;
-      selectedDays = {};
-      timeslots = {};
+      selectedlevelId = null;
+      selectedDurationId = null;
+      selectedReleasedId = null;
+      selectedDays.clear();
+      timeslots.clear();
       rating = 0;
-      range = RangeValues(12, 29);
+      range = const RangeValues(12, 29);
     });
   }
 
-  Future<void> applyFillter() async {
-    setState(() {
-      showDayError = selectedDays.isEmpty;
-      showDayError = timeslots.isEmpty;
-    });
-    if (showDayError) return;
+  bool validate() {
+    final l10n = context.l10n;
+    errors.updateAll((key, value) => null);
 
-    final tutors = await instructorRepo.getInstructorsByKeys(
-      selectedSubjectId,
-      selectedDays.toList(),
-      timeslots.toList(),
-      selectedExperienceId,
-      rating,
-      range.start.toInt(),
-      range.end.toInt(),
-    );
-    context.nav.tolistFilter(context, tutors);
+    if (selectedIndex == 0) {
+      if (selectedDays.isEmpty) {
+        errors[FilterField.day] = l10n.errorSelectAtLeastOneDay;
+      }
+      if (timeslots.isEmpty) {
+        errors[FilterField.timeslot] = l10n.errorSelectAtLeastOneTimeSlot;
+      }
+    }
+
+    return errors.values.every((e) => e == null);
+  }
+
+  Future<void> applyFillter() async {
+    setState(() {});
+    if (!validate()) return;
+    if (selectedIndex == 0) {
+      final tutors = await instructorRepo.getInstructorsByKeys(
+        selectedSubjectId,
+        selectedDays.toList(),
+        timeslots.toList(),
+        selectedExperienceId,
+        rating,
+        range.start.toInt(),
+        range.end.toInt(),
+      );
+      context.nav.tolistFilter(context, tutors, selectedIndex);
+    } else {
+      final courses = await courseRepo.getCoursesByKeys(
+        selectedSubjectId,
+        selectedlevelId,
+        rating,
+        range.start.toInt(),
+        range.end.toInt(),
+        selectedDurationId,
+        selectedReleasedId,
+      );
+      context.nav.tolistFilter(context, courses, selectedIndex);
+    }
   }
 
   @override
@@ -145,8 +205,8 @@ class _FilterPageState extends State<FilterPage> {
                         _buildFilterTutorsSession(context),
                       ],
                       if (selectedIndex == 1) ...[
-
-                      ]
+                        _buildFilterCoursesSession(context),
+                      ],
                     ],
                   ),
                 ),
@@ -254,7 +314,12 @@ class _FilterPageState extends State<FilterPage> {
               child: _buildButton(
                 text: l10n.tutors,
                 isSelected: selectedIndex == 0,
-                onTap: () => setState(() => selectedIndex = 0),
+                onTap: () {
+                  if (selectedIndex != 0) {
+                    resetFilters();
+                    setState(() => selectedIndex = 0);
+                  }
+                },
               ),
             ),
             SizedBox(width: width * 0.03),
@@ -262,7 +327,12 @@ class _FilterPageState extends State<FilterPage> {
               child: _buildButton(
                 text: l10n.courses,
                 isSelected: selectedIndex == 1,
-                onTap: () => setState(() => selectedIndex = 1),
+                onTap: () {
+                  if (selectedIndex != 1) {
+                    resetFilters();
+                    setState(() => selectedIndex = 1);
+                  }
+                },
               ),
             ),
           ],
@@ -453,14 +523,7 @@ class _FilterPageState extends State<FilterPage> {
             }).toList(),
           ),
         ),
-        if (showDayError)
-          Padding(
-            padding: const EdgeInsets.only(top: 6),
-            child: Text(
-              l10n.errorSelectAtLeastOneDay,
-              style: TextStyle(color: Colors.red, fontSize: 13),
-            ),
-          ),
+        _buildError(FilterField.day),
         SizedBox(height: 20),
         Text(
           l10n.timeslots,
@@ -499,14 +562,7 @@ class _FilterPageState extends State<FilterPage> {
             );
           }),
         ),
-        if (showDayError)
-          Padding(
-            padding: const EdgeInsets.only(top: 6),
-            child: Text(
-              l10n.errorSelectAtLeastOneTimeSlot,
-              style: TextStyle(color: Colors.red, fontSize: 13),
-            ),
-          ),
+        _buildError(FilterField.timeslot),
         SizedBox(height: 20),
         FormDropdown<Map<String, dynamic>>(
           title: l10n.tutoringExperience,
@@ -527,6 +583,94 @@ class _FilterPageState extends State<FilterPage> {
         SizedBox(height: 20),
         _buildPriceSession(context, l10n.hourlyRate),
         SizedBox(height: 50),
+      ],
+    );
+  }
+
+  Widget _buildFilterCoursesSession(BuildContext context) {
+    final l10n = context.l10n;
+    final _locale = Localizations.localeOf(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        FormDropdown<Subject>(
+          title: l10n.subject,
+          hintText: l10n.selectSubject,
+          items: subjects,
+          selectedId: selectedSubjectId,
+          getId: (item) => item.id,
+          getLabel: (item, locale) =>
+              locale.languageCode == 'en' ? item.name : item.name,
+          onChanged: (value) {
+            setState(() => selectedSubjectId = value);
+          },
+        ),
+        SizedBox(height: 20),
+        FormDropdown<dynamic>(
+          title: 'Difficulty Level',
+          hintText: 'Select Level',
+          items: levels,
+          selectedId: selectedlevelId,
+          getId: (item) => item['id'],
+          getLabel: (item, locale) =>
+              locale.languageCode == 'en' ? item['en'] : item['vi'],
+          onChanged: (value) {
+            setState(() => selectedlevelId = value);
+          },
+        ),
+        SizedBox(height: 20),
+        _buildRatingSession(context),
+        SizedBox(height: 20),
+        _buildPriceSession(context, 'Price Range'),
+        SizedBox(height: 50),
+        Text(
+          'Duration',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(durations.length, (index) {
+            final data = durations[index];
+            final int key = data['id'];
+            final bool isSelected = selectedDurationId == key;
+
+            return Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  right: index == durations.length - 1 ? 0 : 8,
+                ),
+                child: _buildButton(
+                  text: _locale == const Locale('en') ? data['en'] : data['vi'],
+                  isSelected: isSelected,
+                  onTap: () {
+                    setState(() {
+                      selectedDurationId = key;
+                    });
+                  },
+                ),
+              ),
+            );
+          }),
+        ),
+        SizedBox(height: 20),
+        FormDropdown(
+          title: 'Released',
+          hintText: 'Select Released',
+          items: releaseds,
+          selectedId: selectedReleasedId,
+          getId: (item) => item['id'],
+          getLabel: (item, locale) =>
+              locale.languageCode == 'en' ? item['en'] : item['vi'],
+          onChanged: (value) {
+            setState(() => selectedReleasedId = value);
+          },
+        ),
+        SizedBox(height: 5),
       ],
     );
   }
@@ -568,6 +712,19 @@ class _FilterPageState extends State<FilterPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildError(FilterField field) {
+    final error = errors[field];
+    if (error == null) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 6),
+      child: Text(
+        error,
+        style: const TextStyle(color: Colors.red, fontSize: 13),
       ),
     );
   }
