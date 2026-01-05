@@ -142,5 +142,8 @@
   "noTutorsFound": "No tutors found",
   "pricePerHour": "${price}/hr",
   "errorSelectAtLeastOneDay": "Please select at least one day",
-  "errorSelectAtLeastOneTimeSlot": "Please select at least one time slot during the day"
+  "errorSelectAtLeastOneTimeSlot": "Please select at least one time slot during the day",
+  "durationHours": "{time}hr",
+  "noCoursesFound": "No courses found",
+  "advanced": "Advanced"
 }

@@ -146,7 +146,7 @@ class _CoursePageState extends State<CoursePage> {
                     return SingleChildScrollView(
                       child: Column(
                         children: courses
-                            .map((course) => _buildCardCourse(context, course))
+                            .map((course) => buildCardCourse(context, course))
                             .toList(),
                       ),
                     );
@@ -156,35 +156,6 @@ class _CoursePageState extends State<CoursePage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildCardCourse(BuildContext context, Course course) {
-    final sizeImage = MediaQuery.of(context).size.width * 0.38;
-    return Container(
-      padding: EdgeInsets.only(bottom: 18),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              image: DecorationImage(
-                image: AssetImage(course.image),
-                fit: BoxFit.cover,
-              ),
-            ),
-            width: sizeImage,
-            height: sizeImage,
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.only(left: 15),
-              child: buildCourseDescription(context, course),
-            ),
-          ),
-        ],
       ),
     );
   }

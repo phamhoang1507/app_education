@@ -877,6 +877,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please select at least one time slot during the day'**
   String get errorSelectAtLeastOneTimeSlot;
+
+  /// No description provided for @durationHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{time}hr'**
+  String durationHours(Object time);
+
+  /// No description provided for @noCoursesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No courses found'**
+  String get noCoursesFound;
+
+  /// No description provided for @advanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get advanced;
 }
 
 class _AppLocalizationsDelegate

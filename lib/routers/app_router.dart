@@ -3,7 +3,7 @@ import 'package:education_app/screens/course_page.dart';
 import 'package:education_app/screens/filter_page.dart';
 import 'package:education_app/screens/forget_pass_page.dart';
 import 'package:education_app/screens/home_page.dart';
-import 'package:education_app/screens/list_tutors_page.dart';
+import 'package:education_app/screens/list_filter_page.dart';
 import 'package:education_app/screens/login_page.dart';
 import 'package:education_app/screens/policy_page.dart';
 import 'package:education_app/screens/profile_page.dart';
@@ -51,7 +51,7 @@ final GoRouter appRouter = GoRouter(
               name: NavigationManager.listFilter,
               builder: (context, state) {
                 final args = state.extra as Map<String, dynamic>;
-                return ListTutorsPage(items: args['data']);
+                return ListFilterPage(items: args['list'], type: args['type']);
               },
             ),
           ],

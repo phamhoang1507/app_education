@@ -414,4 +414,15 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get errorSelectAtLeastOneTimeSlot =>
       'Vui lòng chọn ít nhất một khung giờ trong ngày';
+
+  @override
+  String durationHours(Object time) {
+    return '$time giờ';
+  }
+
+  @override
+  String get noCoursesFound => 'Không tìm thấy khóa học nào';
+
+  @override
+  String get advanced => 'Trình độ cao';
 }

@@ -69,8 +69,8 @@ class NavigationManager {
   }
 
   /// Navigate to ListFilter page
-  void tolistFilter(BuildContext context, List<dynamic> data) {
-    context.push(listFilterPath, extra: {'data': data});
+  void tolistFilter(BuildContext context, List<dynamic>? list, int type) {
+    context.push(listFilterPath, extra: {'list': list, 'type': type});
   }
 
   /// Navigate to Profile page
